@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application List</title>
+</head>
+<body>
+<h1>Application List</h1>
+<h2>User Administration</h2>
+<h2>Cash Transactions</h2>
+<h2>Bank Transaction Placeholder 1</h2>
+<h2>Bank Transaction Placeholder 2</h2>
+<h2>Bank Transaction Placeholder 3</h2>
+<h2>Bank Transaction Placeholder 4</h2>
+<h2>Bank Transaction Placeholder 5</h2>
+<form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+
+</body>
+</html>

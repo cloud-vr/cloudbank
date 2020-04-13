@@ -6,13 +6,11 @@
 </head>
 <body>
 <h1>Application List</h1>
-<h2>User Administration</h2>
-<h2>Cash Transactions</h2>
-<h2>Bank Transaction Placeholder 1</h2>
-<h2>Bank Transaction Placeholder 2</h2>
-<h2>Bank Transaction Placeholder 3</h2>
-<h2>Bank Transaction Placeholder 4</h2>
-<h2>Bank Transaction Placeholder 5</h2>
+<a href="{% url 'bank:application_list' %}"><h2>System Users</h2></a>
+<a href="{% url 'bank:create_client' %}"><h2>Client Accounts</h2></a>
+<a href="{% url 'bank:create_deposit_trx' %}"><h2>Deposit</h2></a>
+<a href="{% url 'bank:create_withdraw_trx' %}"><h2>Withdrawal</h2><a/>
+<h2>Transfers</h2>
 <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
     {% csrf_token %}
     <button type="submit">Logout</button>

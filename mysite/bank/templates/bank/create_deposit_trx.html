@@ -9,7 +9,7 @@
 <h1>Deposit Transaction</h1>
 <form class="site-form" action="{% url 'bank:create_deposit_trx'%}" method="post">
 	{% csrf_token %}
-	{{form}}
+	{{form.as_p}}
 	<input type="submit" value="Create">
 </form>
 

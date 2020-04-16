@@ -1,7 +1,8 @@
 import random
 
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+
 
 class Client(models.Model):
     fname = models.CharField('First Name', max_length=20)
@@ -11,10 +12,11 @@ class Client(models.Model):
     mobile_num = models.IntegerField('Mobile Number')
     email_addr = models.EmailField('Email Address', max_length=200)
     # Foreign Key
-    created_by = models.ForeignKey(User, default=None,  on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.fname
+
 
 class DepositTransaction(models.Model):
     # General Transaction Information
@@ -36,6 +38,7 @@ class DepositTransaction(models.Model):
 
     def __str__(self):
         return self.trx_ref
+
 
 class WithdrawTransaction(models.Model):
     # General Transaction Information

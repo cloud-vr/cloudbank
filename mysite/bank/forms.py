@@ -1,7 +1,9 @@
-from django import forms
+from django.forms import ModelForm
+
 from . import models
 
-class CreateClient(forms.ModelForm):
+
+class CreateClient(ModelForm):
     class Meta:
         model = models.Client
         fields = ['fname',
@@ -11,7 +13,8 @@ class CreateClient(forms.ModelForm):
                   'mobile_num',
                   'email_addr']
 
-class CreateDepositTrx(forms.ModelForm):
+
+class CreateDepositTrx(ModelForm):
     class Meta:
         model = models.DepositTransaction
         fields = ['trx_ref',
@@ -22,7 +25,8 @@ class CreateDepositTrx(forms.ModelForm):
                   'current_balance',
                   'total_balance']
 
-class CreateWithdrawTrx(forms.ModelForm):
+
+class CreateWithdrawTrx(ModelForm):
     class Meta:
         model = models.WithdrawTransaction
         fields = ['trx_ref',

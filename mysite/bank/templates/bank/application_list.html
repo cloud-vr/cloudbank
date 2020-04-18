@@ -6,8 +6,8 @@
 </head>
 <body>
 <h1>Application List</h1>
-<a href="{% url 'bank:application_list' %}"><h2>System Users</h2></a>
-<a href="{% url 'bank:create_client' %}"><h2>Client Accounts</h2></a>
+<a href="{% url 'accounts:create_user' %}"><h2>System Users</h2></a>
+<a href="{% url 'bank:client_accounts' %}"><h2>Client Accounts</h2></a>
 <a href="{% url 'bank:create_deposit_trx' %}"><h2>Deposit</h2></a>
 <a href="{% url 'bank:create_withdraw_trx' %}"><h2>Withdrawal</h2><a/>
 <h2>Transfers</h2>

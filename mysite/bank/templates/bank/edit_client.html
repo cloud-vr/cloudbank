@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Client</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<h1>Edit Client</h1>
+
+
+<form class="site-form" action="{% url 'bank:edit_client'%}" method="post">
+    {% csrf_token %}
+
+	<label for="client_id">Client ID:</label>
+	<input type="number" name="client_id" maxlength="20" required="" id="client_id" {{ readonly }} value={{ client_id }}>
+	<input type="submit" id="search_button" name="search_button" value="Search">
+
+    {{form.as_p}}
+    <input type="submit" id="save_button" name="save_button" {{ hidden }} value="Save">
+</form>
+
+</body>
+</html>

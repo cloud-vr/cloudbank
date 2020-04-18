@@ -1,5 +1,5 @@
 TODO:
-    vertical align forms
+    client: edit and delete
     hold balance for a customer, increase or decrease balance depending on the transaction type
     workflows: inputter, approver
     need a base html template that display general information: user logged in, authentication rights, time, side bars, etc. whatever is necessary

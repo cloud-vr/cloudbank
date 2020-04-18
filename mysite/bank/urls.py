@@ -11,5 +11,6 @@ urlpatterns = [
     path('edit_client', views.edit_client, name='edit_client'),
     path('delete_client', views.delete_client, name='delete_client'),
     path('create_deposit_trx', views.create_deposit_trx, name='create_deposit_trx'),
-    path('create_withdraw_trx', views.create_withdraw_trx, name='create_withdraw_trx')
+    path('create_withdraw_trx', views.create_withdraw_trx, name='create_withdraw_trx'),
+    path('create_transfer_trx', views.create_transfer_trx, name='create_transfer_trx')
 ]

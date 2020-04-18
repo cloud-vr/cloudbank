@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Deposit Transaction</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<h1>Deposit Transaction</h1>
+<form class="site-form" action="{% url 'bank:create_deposit_trx'%}" method="post">
+    {% csrf_token %}
+
+    <label for="client_id">Client ID:</label>
+    <input type="number" name="client_id" maxlength="20" required="" id="client_id" {{ readonly }} value={{ client_id }}>
+    <input type="submit" id="search_button" name="search_button" value="Search">
+
+    <h2>Client Information</h2>
+    <fieldset disabled>
+        {{ client_info.as_p }}
+    </fieldset>
+
+    <h2>Deposit Transaction</h2>
+    <fieldset>
+        {{form.as_p}}
+        <input type="submit" id="deposit_button" name="deposit_button" {{ hidden }} value="Confirm">
+        <input type="submit" id="calculate_button" name="calculate_button" {{ hidden }} value="Calculate">
+    </fieldset>
+</form>
+
+</body>
+</html>

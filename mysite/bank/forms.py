@@ -1,5 +1,8 @@
+from django import forms
 from django.forms import ModelForm
+
 from . import models
+
 
 class CreateClient(ModelForm):
     class Meta:
@@ -13,11 +16,12 @@ class CreateClient(ModelForm):
 
 
 class CreateDepositTrx(ModelForm):
+    total_balance = forms.FloatField(required=False)
+
     class Meta:
         model = models.DepositTransaction
         fields = ['trx_ref',
                   'status',
-                  'client',
                   'deposit_amt',
                   'curr',
                   'current_balance',
@@ -25,12 +29,22 @@ class CreateDepositTrx(ModelForm):
 
 
 class CreateWithdrawTrx(ModelForm):
+    total_balance = forms.FloatField(required=False)
+
     class Meta:
         model = models.WithdrawTransaction
         fields = ['trx_ref',
                   'status',
-                  'client',
                   'withdraw_amt',
                   'curr',
                   'current_balance',
                   'total_balance']
+
+
+class CreateTransferTrx(ModelForm):
+    class Meta:
+        model = models.TransferTransaction
+        fields = ['trx_ref',
+                  'status',
+                  'transfer_amt',
+                  'curr']

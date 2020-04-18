@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout
 
 # Create your views here.
 
-def signup_view(request):
+def create_user(request):
     form = UserCreationForm()
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -15,7 +15,7 @@ def signup_view(request):
             return redirect('bank:application_list')
     else:
         form = UserCreationForm()
-    return render(request, 'accounts/signup.html', {'form': form})
+    return render(request, 'accounts/create_user.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':

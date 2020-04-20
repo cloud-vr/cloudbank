@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Deposit Transaction List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<h1>Deposit Transaction List</h1>
+
+
+<a href="{% url 'bank:create_deposit_trx'%}"><input type="submit" id="new_button" name="new_button" value="New"></a>
+
+<br><br>
+
+<form class="site-form" action="{% url 'bank:view_deposit_trx'%}" method="post">
+    {% csrf_token %}
+
+    <label for="client_id">Client ID:</label>
+    <input type="number" name="client_id" maxlength="20" required value={{ client_id }}
+           id="client_id">
+    <input type="submit" id="search_button" name="search_button" value="Search">
+
+    <br><br>
+
+    <table border="1" width="600">
+        <tr>
+            <td>Trx Date:</td>
+            <td>Trx ref:</td>
+            <td>Client:</td>
+            <td>Deposit Amount:</td>
+            <td>Currency:</td>
+        </tr>
+        {% for deposit_trx in obj_list_deposit_trx %}
+        <tr>
+            <td>{{ deposit_trx.trx_date }}</td>
+            <td>{{ deposit_trx.trx_ref }}</td>
+            <td>{{ deposit_trx.client }}</td>
+            <td>{{ deposit_trx.deposit_amt }}</td>
+            <td>{{ deposit_trx.curr }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</form>
+
+</body>
+</html>

@@ -15,6 +15,19 @@ def client_accounts(request):
 
 
 @login_required(login_url="/accounts/login")
+def view_client(request):
+    if request.method == 'POST':
+        client_id = request.POST['client_id']
+        selected_client = get_object_or_404(models.Client, pk=client_id)
+        form = forms.CreateClient(instance=selected_client)
+        return render(request, 'bank/view_client.html', {'form': form,
+                                                         'client_id': client_id,
+                                                         'readonly': 'readonly'})
+    else:
+        return render(request, 'bank/view_client.html', {'hidden': 'hidden'})
+
+
+@login_required(login_url="/accounts/login")
 def create_client(request):
     if request.method == 'POST':
         form = forms.CreateClient(request.POST)
@@ -73,6 +86,23 @@ def delete_client(request):
 
 
 @login_required(login_url="/accounts/login")
+def view_deposit_trx(request):
+    obj_list_deposit_trx = models.DepositTransaction.objects.all()
+    if request.method == 'POST':
+        # upon click of search button
+        if 'search_button' in request.POST:
+            if request.POST['client_id']:
+                obj_list_deposit_trx = obj_list_deposit_trx.filter(client=request.POST['client_id'])
+                context = {'obj_list_deposit_trx': obj_list_deposit_trx}
+        else:
+            context = {}
+    else:
+        # initial landing page of view deposit transactions
+        context = {'obj_list_deposit_trx': obj_list_deposit_trx}
+    return render(request, 'bank/deposit_trx_list.html', context)
+
+
+@login_required(login_url="/accounts/login")
 def create_deposit_trx(request):
     if request.method == 'POST':
         client_id = request.POST['client_id']
@@ -89,7 +119,7 @@ def create_deposit_trx(request):
                 # update balance of client
                 selected_client.balance = instance.total_balance
                 selected_client.save()
-                return redirect('bank:application_list')
+                return redirect('bank:view_deposit_trx')
         elif 'calculate_button' in request.POST:
             form = forms.CreateDepositTrx(request.POST)
             if form.is_valid():
@@ -114,6 +144,23 @@ def create_deposit_trx(request):
 
 
 @login_required(login_url="/accounts/login")
+def view_withdraw_trx(request):
+    obj_list_withdraw_trx = models.WithdrawTransaction.objects.all()
+    if request.method == 'POST':
+        # upon click of search button
+        if 'search_button' in request.POST:
+            if request.POST['client_id']:
+                obj_list_withdraw_trx = obj_list_withdraw_trx.filter(client=request.POST['client_id'])
+                context = {'obj_list_withdraw_trx': obj_list_withdraw_trx}
+        else:
+            context = {}
+    else:
+        # initial landing page of view deposit transactions
+        context = {'obj_list_withdraw_trx': obj_list_withdraw_trx}
+    return render(request, 'bank/withdraw_trx_list.html', context)
+
+
+@login_required(login_url="/accounts/login")
 def create_withdraw_trx(request):
     if request.method == 'POST':
         client_id = request.POST['client_id']
@@ -130,7 +177,7 @@ def create_withdraw_trx(request):
                 # update balance of client
                 selected_client.balance = instance.total_balance
                 selected_client.save()
-                return redirect('bank:application_list')
+                return redirect('bank:view_withdraw_trx')
         elif 'calculate_button' in request.POST:
             form = forms.CreateWithdrawTrx(request.POST)
             if form.is_valid():
@@ -152,6 +199,23 @@ def create_withdraw_trx(request):
     else:
         # Initial landing page of edit client
         return render(request, 'bank/withdraw_trx.html', {'hidden': 'hidden'})
+
+
+@login_required(login_url="/accounts/login")
+def view_transfer_trx(request):
+    obj_list_transfer_trx = models.TransferTransaction.objects.all()
+    if request.method == 'POST':
+        # upon click of search button
+        if 'search_button' in request.POST:
+            if request.POST['client_id']:
+                obj_list_transfer_trx = obj_list_transfer_trx.filter(from_client=request.POST['client_id'])
+                context = {'obj_list_transfer_trx': obj_list_transfer_trx}
+        else:
+            context = {}
+    else:
+        # initial landing page of view deposit transactions
+        context = {'obj_list_transfer_trx': obj_list_transfer_trx}
+    return render(request, 'bank/transfer_trx_list.html', context)
 
 
 def create_transfer_trx(request):
@@ -203,16 +267,14 @@ def create_transfer_trx(request):
                 instance.created_by = request.user
                 instance.save()
                 # update balance from-client
-                # todo: (A)
                 from_client.balance = from_client.balance - instance.transfer_amt
                 from_client.save()
                 # update balance to-client
                 to_client.balance = to_client.balance + instance.transfer_amt
                 to_client.save()
                 form = forms.CreateTransferTrx(instance=instance)
-                return render(request, 'bank/application_list.html')
+                return render(request, 'bank/transfer_trx_list.html')
         else:
             return render(request, 'bank/transfer_trx.html')
     else:
         return render(request, 'bank/transfer_trx.html')
-

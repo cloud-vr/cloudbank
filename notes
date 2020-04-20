@@ -1,5 +1,6 @@
 TODO:
+    code optimization, focus on cleaning current functionality, don't add new
+    calculate button, what if you don't press calculate first?
     double check trx date field
-    view for: clients, deposit, withdraw, transfer trx
-    workflows: inputter, approver
     need a base html template that display general information: user logged in, authentication rights, time, side bars, etc. whatever is necessary
+    workflows: inputter, approver

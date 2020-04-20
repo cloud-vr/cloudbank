@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Withdraw Transaction</title>
+    <title>Transfer Transaction</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<h1>Withdraw Transaction</h1>
+<h1>Transfer Transaction</h1>
 <form class="site-form" action="{% url 'bank:create_transfer_trx'%}" method="post">
     {% csrf_token %}
     <label for="from_client_id">From Client ID:</label>
     <input type="number" name="from_client_id" maxlength="20" required="" {{ readonly }} value={{ from_client_id }}
            id="from_client_id">
 
-    <label for="to_client_id">From Client ID:</label>
+    <label for="to_client_id">To Client ID:</label>
     <input type="number" name="to_client_id" maxlength="20" required="" {{ readonly }} value={{ to_client_id }}
            id="to_client_id" }>
     <input type="submit" id="search_button" name="search_button" value="Search">

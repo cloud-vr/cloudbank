@@ -5,24 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
+
 <h1>Deposit Transaction List</h1>
 
-
 <a href="{% url 'bank:create_deposit_trx'%}"><input type="submit" id="new_button" name="new_button" value="New"></a>
-
 <br><br>
 
 <form class="site-form" action="{% url 'bank:view_deposit_trx'%}" method="post">
     {% csrf_token %}
-
     <label for="client_id">Client ID:</label>
-    <input type="number" name="client_id" maxlength="20" required value={{ client_id }}
-           id="client_id">
+    <input type="number" name="client_id" maxlength="20" required value={{ client_id }} id="client_id">
     <input type="submit" id="search_button" name="search_button" value="Search">
-
     <br><br>
-
     <table border="1" width="600">
         <tr>
             <td>Trx Date:</td>
@@ -41,7 +37,6 @@
         </tr>
         {% endfor %}
     </table>
-
 </form>
 
 </body>

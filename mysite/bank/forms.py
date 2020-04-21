@@ -1,3 +1,5 @@
+from gc import disable
+
 from django import forms
 from django.forms import ModelForm
 
@@ -16,7 +18,9 @@ class CreateClient(ModelForm):
 
 
 class CreateDepositTrx(ModelForm):
-    total_balance = forms.FloatField(required=False)
+    total_balance = forms.FloatField(disabled=True)
+    current_balance = forms.FloatField(disabled=True)
+    # curr = forms.FloatField(disabled=True)
 
     class Meta:
         model = models.DepositTransaction

@@ -3,4 +3,9 @@ TODO:
     calculate button, what if you don't press calculate first?
     double check trx date field
     need a base html template that display general information: user logged in, authentication rights, time, side bars, etc. whatever is necessary
-    workflows: inputter, approver
+
+TODO:
+    LOW PRIO
+        back button -> view client
+        are you sure when deleting client or user
+        workflows: inputter, approver

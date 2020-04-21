@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <title>Application List</title>
 </head>
+
 <body>
+
 <h1>Application List</h1>
-<a href="{% url 'accounts:create_user' %}"><h2>System Users</h2></a>
-<a href="{% url 'bank:client_accounts' %}"><h2>Client Accounts</h2></a>
-<a href="{% url 'bank:view_deposit_trx' %}"><h2>Deposit</h2></a>
-<a href="{% url 'bank:view_withdraw_trx' %}"><h2>Withdrawal</h2><a/>
-<a href="{% url 'bank:view_transfer_trx' %}"><h2>Transfers</h2><a/>
+
+<ul>
+    <a href="{% url 'accounts:user_list' %}"><h2>System Users</h2></a>
+    <a href="{% url 'bank:client_accounts' %}"><h2>Client Accounts</h2></a>
+    <a href="{% url 'bank:view_deposit_trx' %}"><h2>Deposit</h2></a>
+    <a href="{% url 'bank:view_withdraw_trx' %}"><h2>Withdrawal</h2></a>
+    <a href="{% url 'bank:view_transfer_trx' %}"><h2>Transfers</h2></a>
+</ul>
+
 <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
     {% csrf_token %}
     <button type="submit">Logout</button>

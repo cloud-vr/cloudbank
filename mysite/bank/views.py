@@ -1,3 +1,6 @@
+import random
+from datetime import date
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -48,12 +51,12 @@ def create_client(request):
         if f_create_client.is_valid():
             ft_create_client_ = f_create_client.save(commit=False)
             ft_create_client_.created_by = request.user
-            ft_create_client_.balance = 0
             ft_create_client_.save()
             return redirect(l_redirect)
     else:
         # GET METHOD
-        f_create_client = forms.CreateClient()
+        f_create_client = forms.CreateClient(initial={'created_by': request.user,
+                                                      'balance': 0})
         l_context = {'form': f_create_client}
     return render(request, l_template, l_context)
 
@@ -153,8 +156,12 @@ def create_deposit_trx(request):
                 # upon click of search button
                 if 'search_button' in request.POST:
                     l_balance = obj_searched_client.balance
+                    l_ref = str(random.randint(1000000000, 9999999999))
                     f_create_deposit_trx = forms.CreateDepositTrx(
-                        initial={'current_balance': l_balance,
+                        initial={'trx_date': date.today(),
+                                 'trx_ref': l_ref,
+                                 'status': 'Open',
+                                 'current_balance': l_balance,
                                  'total_balance': l_balance})
                     l_context = {'form': f_create_deposit_trx,
                                  'client_id': l_client_id,
@@ -177,15 +184,15 @@ def create_deposit_trx(request):
                     f_create_deposit_trx = forms.CreateDepositTrx(request.POST)
                     if f_create_deposit_trx.is_valid():
                         ft_create_deposit_trx = f_create_deposit_trx.save(commit=False)
-                        ft_create_deposit_trx.client = obj_searched_client  # todo: isn't the client part of the default form?
+                        ft_create_deposit_trx.client = obj_searched_client
                         ft_create_deposit_trx.created_by = request.user
+                        l_total_balance = f_create_deposit_trx.cleaned_data['current_balance'] + \
+                                          f_create_deposit_trx.cleaned_data['deposit_amt']
+                        ft_create_deposit_trx.total_balance = l_total_balance
+                        ft_create_deposit_trx.status = 'Done'
                         ft_create_deposit_trx.save()
-                        # todo: update the form total balance, since it can be outdated too
-                        # update balance of client: use the computed value again instead of the
-                        # total balance field because there is a chance that it is outdated
-                        obj_searched_client.balance = f_create_deposit_trx.cleaned_data['current_balance'] + \
-                                                      f_create_deposit_trx.cleaned_data['deposit_amt']
-
+                        # update balance of the client object
+                        obj_searched_client.balance = l_total_balance
                         obj_searched_client.save()
                         return redirect(l_redirect)
     else:
@@ -229,8 +236,14 @@ def create_withdraw_trx(request):
                 obj_searched_client = get_object_or_404(models.Client, pk=l_client_id)
                 f_create_client = forms.CreateClient(instance=obj_searched_client)
                 if 'search_button' in request.POST:
+                    l_balance = obj_searched_client.balance
+                    l_ref = str(random.randint(1000000000, 9999999999))
                     f_create_withdraw_trx = forms.CreateWithdrawTrx(
-                        initial={'current_balance': obj_searched_client.balance})
+                        initial={'trx_date': date.today(),
+                                 'trx_ref': l_ref,
+                                 'status': 'Open',
+                                 'current_balance': obj_searched_client.balance,
+                                 'total_balance': l_balance})
                     l_context = {'form': f_create_withdraw_trx,
                                  'client_id': l_client_id,
                                  'client_info': f_create_client,
@@ -247,15 +260,19 @@ def create_withdraw_trx(request):
                                      'client_info': f_create_client,
                                      'readonly': 'readonly'}
                 # upon click of deposit button
-                elif 'deposit_button' in request.POST:
+                elif 'withdraw_button' in request.POST:
                     f_create_withdraw_trx = forms.CreateWithdrawTrx(request.POST)
                     if f_create_withdraw_trx.is_valid():
                         ft_create_withdraw_trx = f_create_withdraw_trx.save(commit=False)
                         ft_create_withdraw_trx.client = obj_searched_client
                         ft_create_withdraw_trx.created_by = request.user
+                        l_total_balance = f_create_withdraw_trx.cleaned_data['current_balance'] - \
+                                          f_create_withdraw_trx.cleaned_data['withdraw_amt']
+                        ft_create_withdraw_trx.total_balance = l_total_balance
+                        ft_create_withdraw_trx.status = 'Done'
                         ft_create_withdraw_trx.save()
                         # update balance of client
-                        obj_searched_client.balance = ft_create_withdraw_trx.total_balance
+                        obj_searched_client.balance = l_total_balance
                         obj_searched_client.save()
                         return redirect(l_redirect)
     else:
@@ -304,7 +321,10 @@ def create_transfer_trx(request):
                 obj_to_client = get_object_or_404(models.Client, pk=l_to_client_id)
                 f_to_client = forms.CreateClient(instance=obj_to_client)
                 if 'search_button' in request.POST:
-                    f_create_transfer_trx = forms.CreateTransferTrx()
+                    l_ref = str(random.randint(1000000000, 9999999999))
+                    f_create_transfer_trx = forms.CreateTransferTrx(initial={'trx_date': date.today(),
+                                                                             'trx_ref': l_ref,
+                                                                             'status': 'Open'})
                     l_context = {'form': f_create_transfer_trx,
                                  'from_client_form': f_from_client,
                                  'from_client_id': l_from_client_id,
@@ -338,6 +358,7 @@ def create_transfer_trx(request):
                         ft_create_transfer_trx.from_client = obj_from_client
                         ft_create_transfer_trx.to_client = obj_to_client
                         ft_create_transfer_trx.created_by = request.user
+                        ft_create_transfer_trx.status = 'Done'
                         ft_create_transfer_trx.save()
                         # update balance from-client
                         obj_from_client.balance = obj_from_client.balance - ft_create_transfer_trx.transfer_amt
@@ -345,7 +366,8 @@ def create_transfer_trx(request):
                         # update balance to-client
                         obj_to_client.balance = obj_to_client.balance + ft_create_transfer_trx.transfer_amt
                         obj_to_client.save()
-                        form = forms.CreateTransferTrx(instance=ft_create_transfer_trx)
                         return redirect(l_redirect)
     else:
-        return render(request, l_template, l_context)
+        # GET METHOD: initial landing page of view deposit transactions
+        l_context = {}
+    return render(request, l_template, l_context)

@@ -10,9 +10,6 @@
 
 <h1>Deposit Transaction</h1>
 
-<form id="calculate_form" class="site-form" action="{% url 'bank:create_deposit_trx'%}" method="post" >
-    {% csrf_token %}
-</form>
 <form class="site-form" action="{% url 'bank:create_deposit_trx'%}" method="post">
     {% csrf_token %}
     <label for="client_id">Client ID:</label>
@@ -26,7 +23,7 @@
     <fieldset>
         {{form.as_p}}
         <input type="submit" id="deposit_button" name="deposit_button" {{ hidden }} value="Confirm">
-        <input type="submit" id="calculate_button" form="calculate_form" name="calculate_button" {{ hidden }} value="Calculate">
+        <input type="submit" id="calculate_button" name="calculate_button" {{ hidden }} value="Calculate">
     </fieldset>
 </form>
 

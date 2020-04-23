@@ -21,11 +21,8 @@ class Client(models.Model):
 
 class DepositTransaction(models.Model):
     # General Transaction Information
-    trx_date = models.DateField('Date', auto_now_add=True)
-    trx_ref = models.CharField(
-        max_length=10,
-        default=str(random.randint(1000000000, 9999999999))
-    )
+    trx_date = models.DateField('Date')
+    trx_ref = models.CharField('Reference #', max_length=10)
     status = models.CharField('Status', max_length=50)
     # Foreign Key
     created_by = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
@@ -43,11 +40,8 @@ class DepositTransaction(models.Model):
 
 class WithdrawTransaction(models.Model):
     # General Transaction Information
-    trx_date = models.DateField('Date', auto_now_add=True)
-    trx_ref = models.CharField(
-        max_length=10,
-        default=str(random.randint(1000000000, 9999999999))
-    )
+    trx_date = models.DateField('Date')
+    trx_ref = models.CharField('Reference #', max_length=10)
     status = models.CharField('Status', max_length=50)
     # Foreign Key
     created_by = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
@@ -65,11 +59,8 @@ class WithdrawTransaction(models.Model):
 
 class TransferTransaction(models.Model):
     # General Transaction Information
-    trx_date = models.DateField('Date', auto_now_add=True)
-    trx_ref = models.CharField(
-        max_length=10,
-        default=str(random.randint(1000000000, 9999999999))
-    )
+    trx_date = models.DateField('Date')
+    trx_ref = models.CharField('Reference #', max_length=10)
     status = models.CharField('Status', max_length=50)
     # Foreign Key
     created_by = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
@@ -79,3 +70,6 @@ class TransferTransaction(models.Model):
     # Transaction Computation
     transfer_amt = models.FloatField('Transfer Amount')
     curr = models.CharField('Currency', default='PHP', max_length=20)
+
+    def __str__(self):
+        return self.trx_ref

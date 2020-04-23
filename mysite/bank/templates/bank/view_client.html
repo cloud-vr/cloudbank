@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
-<h1>View Client</h1>
 
+<body>
+
+<h1>View Client</h1>
 
 <form class="site-form" action="{% url 'bank:view_client'%}" method="post">
     {% csrf_token %}
-
     <label for="client_id">Client ID:</label>
-    <input type="number" name="client_id" maxlength="20" required="" {{ readonly }} value={{ client_id }}
+    <input type="number" name="client_id" maxlength="20" required {{ readonly }} value={{ client_id }}
            id="client_id">
     <input type="submit" id="search_button" name="search_button" value="Search">
     <fieldset disabled>

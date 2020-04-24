@@ -8,6 +8,13 @@
 
 {% block content_title %}Transfer Transaction List{% endblock %}
 
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'bank:application_list' %}">Application List</a> >
+    <a href="{% url 'bank:application_list' %}">Transactions</a> > Transfer Transaction List
+</div>
+{% endblock %}
+
 {%block content %}
 <a href="{% url 'bank:create_transfer_trx'%}"><input type="submit" id="new_button" name="new_button" value="New"></a>
 <br><br>

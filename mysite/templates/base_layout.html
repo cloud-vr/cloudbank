@@ -25,8 +25,11 @@
 </div>
 <!-- END Header -->
 
+{% block breadcrumbs %}
+{% endblock %}
+
 <!-- Content -->
-<div id="content" class="colMS">
+<div id="content" class="colS">
     <h1>{% block content_title %}{% endblock %}</h1>
     <div id="content-main">
         {%block content %}{% endblock %}

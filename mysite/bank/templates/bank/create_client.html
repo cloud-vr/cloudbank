@@ -5,16 +5,35 @@
 
 {% block extrastyle %}
 <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
 {% endblock %}
 
 {% block content_title %}Create Client{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'bank:application_list' %}">Application List</a> >
+    <a href="{% url 'bank:application_list' %}">Static Data</a> >
+    <a href="{% url 'bank:client_accounts' %}">Client Accounts</a> > Create Client
+</div>
+{% endblock %}
 
 {%block content %}
 <form class="site-form" action="{% url 'bank:create_client'%}" method="post">
     {% csrf_token %}
     <fieldset class="module aligned ">
-        {{form.as_p}}
+        {% for item in form %}
+        <div class="form-row">
+            <div>
+                <label class="required">{{ item.label }}</label>
+                {{ item }}
+            </div>
+        </div>
+        {% endfor %}
     </fieldset>
-    <input type="submit" value="Create">
+
+    <div class="submit-row">
+        <input type="submit" value="Save" class="default" name="_save">
+    </div>
 </form>
 {% endblock %}

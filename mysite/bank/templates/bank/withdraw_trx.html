@@ -9,21 +9,48 @@
 
 {% block content_title %}Withdraw Transaction{% endblock %}
 
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'bank:application_list' %}">Application List</a> >
+    <a href="{% url 'bank:application_list' %}">Transactions</a> >
+    <a href="{% url 'bank:view_withdraw_trx' %}">Withdraw Transaction List</a> > New Withdraw
+</div>
+{% endblock %}
+
 {%block content %}
 <form class="site-form" action="{% url 'bank:create_withdraw_trx'%}" method="post">
     {% csrf_token %}
     <label for="client_id">Client ID:</label>
     <input type="number" name="client_id" maxlength="20" required {{ readonly }} value={{ client_id }} id="client_id">
     <input type="submit" id="search_button" name="search_button" value="Search">
-    <h2>Client Information</h2>
+    <br><br>
+    <div class="module">
+        <h2>Client Information</h2></div>
     <fieldset class="module aligned " disabled>
-        {{ client_info.as_p }}
+        {% for item in client_info %}
+        <div class="form-row">
+            <div>
+                <label class="required">{{ item.label }}</label>
+                {{ item }}
+            </div>
+        </div>
+        {% endfor %}
     </fieldset>
-    <h2>Withdraw Transaction</h2>
+    <div class="module">
+        <h2>Withdraw Transaction</h2></div>
     <fieldset class="module aligned ">
-        {{form.as_p}}
-        <input type="submit" id="withdraw_button" name="withdraw_button" {{ hidden }} value="Confirm">
-        <input type="submit" id="calculate_button" name="calculate_button" {{ hidden }} value="Calculate">
+        {% for item in form %}
+        <div class="form-row">
+            <div>
+                <label class="required">{{ item.label }}</label>
+                {{ item }}
+            </div>
+        </div>
+        {% endfor %}
+        <div class="submit-row">
+            <input type="submit" id="calculate_button" name="calculate_button" {{ hidden }} value="Calculate">
+            <input type="submit" id="withdraw_button" name="withdraw_button" {{ hidden }} value="CONFIRM">
+        </div>
     </fieldset>
 </form>
 {% endblock %}

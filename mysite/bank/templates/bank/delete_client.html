@@ -9,6 +9,14 @@
 
 {% block content_title %}Delete Client{% endblock %}
 
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'bank:application_list' %}">Application List</a> >
+    <a href="{% url 'bank:application_list' %}">Static Data</a> >
+    <a href="{% url 'bank:client_accounts' %}">Client Accounts</a> > Delete Client
+</div>
+{% endblock %}
+
 {%block content %}
 <form class="site-form" action="{% url 'bank:delete_client'%}" method="post">
     {% csrf_token %}

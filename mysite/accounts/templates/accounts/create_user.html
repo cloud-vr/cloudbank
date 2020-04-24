@@ -8,10 +8,54 @@
 
 {% block content_title %}Create System User{% endblock %}
 
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'bank:application_list' %}">Application List</a> >
+    <a href="{% url 'bank:application_list' %}">Static Data</a> >
+    <a href="{% url 'accounts:user_list' %}">System User List</a> > Create System User
+</div>
+{% endblock %}
+
 {%block content %}
 <form class="site-form" action="{% url 'accounts:create_user' %}" method="post">
     {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Create">
+    <div>
+          <fieldset class="module aligned wide">
+        <div class="form-row field-username">
+            <div>
+                <label class="required" for="id_username">Username:</label>
+                <input type="text" name="username" class="vTextField" maxlength="150" autocapitalize="none"
+                       autocomplete="username" autofocus required id="id_username">
+                <div class="help">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
+            </div>
+        </div>
+        <div class="form-row field-password1">
+            <div>
+                <label class="required" for="id_password1">Password:</label>
+                <input type="password" name="password1" autocomplete="new-password" required id="id_password1">
+                <div class="help">
+                    <ul>
+                        <li>Your password can’t be too similar to your other personal information.</li>
+                        <li>Your password must contain at least 8 characters.</li>
+                        <li>Your password can’t be a commonly used password.</li>
+                        <li>Your password can’t be entirely numeric.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-row field-password2">
+            <div>
+                <label class="required" for="id_password2">Password confirmation:</label>
+                <input type="password" name="password2" autocomplete="new-password" required id="id_password2">
+                <div class="help">Enter the same password as before, for verification.</div>
+            </div>
+        </div>
+          </fieldset>
+    </div>
+
+    <div class="submit-row">
+        <input type="submit" value="Save" class="default" name="_save">
+    </div>
+
 </form>
 {% endblock %}

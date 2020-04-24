@@ -8,14 +8,20 @@
 
 {% block content_title %}System User List{% endblock %}
 
-{%block content %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'bank:application_list' %}">Application List</a> >
+    <a href="{% url 'bank:application_list' %}">Static Data</a> > System User List
+</div>
+{% endblock %}
 
+{%block content %}
 <a href="{% url 'accounts:create_user'%}"><input type="submit" id="new_button" name="new_button" value="New"></a>
 
-<table border="1" width="600">
+<table border="2" width="600">
     <tr>
-        <td>Username:</td>
-        <td>Email Address:</td>
+        <th>Username:</th>
+        <th>Email Address:</th>
     </tr>
     {% for user in obj_list_user %}
     <tr>
@@ -24,5 +30,4 @@
     </tr>
     {% endfor %}
 </table>
-
 {% endblock %}

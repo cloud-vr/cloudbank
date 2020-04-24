@@ -8,6 +8,13 @@
 
 {% block content_title %}Client Accounts{% endblock %}
 
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'bank:application_list' %}">Application List</a> >
+    <a href="{% url 'bank:application_list' %}">Static Data</a> > Client Accounts
+</div>
+{% endblock %}
+
 {%block content %}
 <ul>
     <a href="{% url 'bank:view_client' %}"><h2>View Client</h2></a>

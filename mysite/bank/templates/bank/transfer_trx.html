@@ -9,6 +9,14 @@
 
 {% block content_title %}Transfer Transaction{% endblock %}
 
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'bank:application_list' %}">Application List</a> >
+    <a href="{% url 'bank:application_list' %}">Transactions</a> >
+    <a href="{% url 'bank:view_transfer_trx' %}">Transfer Transaction List</a> > New Transfer
+</div>
+{% endblock %}
+
 {%block content %}
 <form class="site-form" action="{% url 'bank:create_transfer_trx'%}" method="post">
     {% csrf_token %}
@@ -19,31 +27,59 @@
     <input type="number" name="to_client_id" maxlength="20" required {{ readonly }} value={{ to_client_id }}
            id="to_client_id" }>
     <input type="submit" id="search_button" name="search_button" value="Search">
-    <h2>Transfer From</h2>
+    <br><br>
+    <div class="module">
+        <h2>Transfer From</h2></div>
     <fieldset class="module aligned " disabled>
-        {{ from_client_form.as_p }}
+        {% for item in from_client_form %}
+        <div class="form-row">
+            <div>
+                <label class="required">{{ item.label }}</label>
+                {{ item }}
+            </div>
+        </div>
+        {% endfor %}
         <p><label for="from_client_old_bal">Current Balance:</label>
-        <input type="number" name="from_client_old_bal" maxlength="20" required value={{ from_client_old_bal }}
-               id="from_client_old_bal"></p>
+            <input type="number" name="from_client_old_bal" maxlength="20" required value={{ from_client_old_bal }}
+                   id="from_client_old_bal"></p>
         <p><label for="from_client_new_bal">New Balance:</label>
-        <input type="number" name="from_client_new_bal" maxlength="20" required value={{ from_client_new_bal }}
-               id="from_client_new_bal"></p>
+            <input type="number" name="from_client_new_bal" maxlength="20" required value={{ from_client_new_bal }}
+                   id="from_client_new_bal"></p>
     </fieldset>
-    <h2>Transfer To</h2>
+    <div class="module">
+        <h2>Transfer To</h2></div>
     <fieldset class="module aligned " disabled>
-        {{ to_client_form.as_p }}
+        {% for item in to_client_form %}
+        <div class="form-row">
+            <div>
+                <label class="required">{{ item.label }}</label>
+                {{ item }}
+            </div>
+        </div>
+        {% endfor %}
         <p><label for="to_client_old_bal">Current Balance:</label>
-        <input type="number" name="to_client_old_bal" maxlength="20" required value={{ to_client_old_bal }}
-               id="to_client_old_bal"></p>
+            <input type="number" name="to_client_old_bal" maxlength="20" required value={{ to_client_old_bal }}
+                   id="to_client_old_bal"></p>
         <p><label for="to_client_new_bal">New Balance:</label>
-        <input type="number" name="to_client_new_bal" maxlength="20" required value={{ to_client_new_bal }}
-               id="to_client_new_bal"></p>
+            <input type="number" name="to_client_new_bal" maxlength="20" required value={{ to_client_new_bal }}
+                   id="to_client_new_bal"></p>
     </fieldset>
-    <h2>Transfer Transaction</h2>
+    <div class="module">
+    <h2>Transfer Transaction</h2></div>
     <fieldset class="module aligned ">
-        {{form.as_p}}
-        <input type="submit" id="confirm_button" name="confirm_button" {{ hidden }} value="Confirm">
-        <input type="submit" id="calculate_button" name="calculate_button" {{ hidden }} value="Calculate">
+        {% for item in form %}
+        <div class="form-row">
+            <div>
+                <label class="required">{{ item.label }}</label>
+                {{ item }}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="submit-row">
+            <input type="submit" id="calculate_button" name="calculate_button" {{ hidden }} value="Calculate">
+            <input type="submit" id="confirm_button" name="confirm_button" {{ hidden }} value="CONFIRM">
+        </div>
     </fieldset>
 </form>
 {% endblock %}

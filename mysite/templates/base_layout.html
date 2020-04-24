@@ -1,0 +1,40 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}">
+    {% block extrastyle %}{% endblock %}
+</head>
+<body>
+
+<!-- Header -->
+<div id="header">
+
+    <div id="branding">
+        <h1 id="site-name"><a href="/admin/">Cloud Bank</a></h1>
+    </div>
+
+    <div id="user-tools">
+        Welcome,
+        <strong>vince</strong>. /
+        <a href="{% url 'bank:application_list' %}">View site</a> /
+        <a href="{% url 'accounts:logout' %}">Log out</a>
+    </div>
+
+</div>
+<!-- END Header -->
+
+<!-- Content -->
+<div id="content" class="colMS">
+    <h1>{% block content_title %}{% endblock %}</h1>
+    <div id="content-main">
+        {%block content %}{% endblock %}
+    </div>
+</div>
+
+<br class="clear">
+
+<!-- END Content -->
+</body>
+</html>

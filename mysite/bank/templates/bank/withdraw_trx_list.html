@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Withdraw Transaction List</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+{% extends "base_layout.html" %}
+{% load static %}
 
-<body>
+{% block title %}Withdraw Transaction List{% endblock %}
 
-<h1>Withdraw Transaction List</h1>
+{% block extrastyle %}
+{% endblock %}
 
+{% block content_title %}Withdraw Transaction List{% endblock %}
+
+{%block content %}
 <a href="{% url 'bank:create_withdraw_trx'%}"><input type="submit" id="new_button" name="new_button" value="New"></a>
 <br><br>
 
@@ -19,13 +18,13 @@
     <input type="number" name="client_id" maxlength="20" required value={{ client_id }} id="client_id">
     <input type="submit" id="search_button" name="search_button" value="Search">
     <br><br>
-    <table border="1" width="600">
+    <table border="2" width="600">
         <tr>
-            <td>Trx Date:</td>
-            <td>Trx ref:</td>
-            <td>Client:</td>
-            <td>Withdraw Amount:</td>
-            <td>Currency:</td>
+            <th>Trx Date:</th>
+            <th>Trx ref:</th>
+            <th>Client:</th>
+            <th>Withdraw Amount:</th>
+            <th>Currency:</th>
         </tr>
         {% for withdraw_trx in obj_list_withdraw_trx %}
         <tr>
@@ -38,6 +37,4 @@
         {% endfor %}
     </table>
 </form>
-
-</body>
-</html>
+{% endblock %}

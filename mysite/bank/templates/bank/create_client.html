@@ -1,20 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Create Client</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+{% extends "base_layout.html" %}
+{% load static %}
 
-<body>
+{% block title %}Create Client{% endblock %}
 
-<h1>Create Client</h1>
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+{% endblock %}
 
+{% block content_title %}Create Client{% endblock %}
+
+{%block content %}
 <form class="site-form" action="{% url 'bank:create_client'%}" method="post">
     {% csrf_token %}
-    {{form.as_p}}
+    <fieldset class="module aligned ">
+        {{form.as_p}}
+    </fieldset>
     <input type="submit" value="Create">
 </form>
-
-</body>
-</html>
+{% endblock %}

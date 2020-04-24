@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Transfer Transaction List</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+{% extends "base_layout.html" %}
+{% load static %}
 
-<body>
+{% block title %}Transfer Transaction List{% endblock %}
 
-<h1>Transfer Transaction List</h1>
+{% block extrastyle %}
+{% endblock %}
 
+{% block content_title %}Transfer Transaction List{% endblock %}
+
+{%block content %}
 <a href="{% url 'bank:create_transfer_trx'%}"><input type="submit" id="new_button" name="new_button" value="New"></a>
 <br><br>
 
@@ -20,14 +19,14 @@
            id="client_id">
     <input type="submit" id="search_button" name="search_button" value="Search">
     <br><br>
-    <table border="1" width="600">
+    <table border="2" width="600">
         <tr>
-            <td>Trx Date:</td>
-            <td>Trx ref:</td>
-            <td>From Client:</td>
-            <td>To Client:</td>
-            <td>transfer Amount:</td>
-            <td>Currency:</td>
+            <th>Trx Date:</th>
+            <th>Trx ref:</th>
+            <th>From Client:</th>
+            <th>To Client:</th>
+            <th>transfer Amount:</th>
+            <th>Currency:</th>
         </tr>
         {% for transfer_trx in obj_list_transfer_trx %}
         <tr>
@@ -42,6 +41,4 @@
     </table>
 
 </form>
-
-</body>
-</html>
+{% endblock %}

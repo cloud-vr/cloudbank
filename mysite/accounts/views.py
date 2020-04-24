@@ -30,16 +30,14 @@ def login_view(request):
             login(request, user)
             # if user was redirected to the login page from a page inside the application
             if 'next' in request.POST:
-                return redirect(request.POST.get('next'))
-            # user started from the login page
-            else:
-                return redirect('bank:application_list')
+                if request.POST['next']:
+                    return redirect(request.POST.get('next'))
+            return redirect('bank:application_list')
     else:
         form = AuthenticationForm()
     return render(request, 'accounts/login.html', {'form': form})
 
 
 def logout_view(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('accounts:login')
+    logout(request)
+    return redirect('accounts:login')

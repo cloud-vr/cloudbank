@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>System User List</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-<h1>System User List</h1>
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block title %}System User List{% endblock %}
+
+{% block extrastyle %}
+{% endblock %}
+
+{% block content_title %}System User List{% endblock %}
+
+{%block content %}
 
 <a href="{% url 'accounts:create_user'%}"><input type="submit" id="new_button" name="new_button" value="New"></a>
 
@@ -23,5 +25,4 @@
     {% endfor %}
 </table>
 
-</body>
-</html>
+{% endblock %}

@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Transfer Transaction</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+{% extends "base_layout.html" %}
+{% load static %}
 
-<body>
+{% block title %}Transfer Transaction{% endblock %}
 
-<h1>Transfer Transaction</h1>
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+{% endblock %}
 
+{% block content_title %}Transfer Transaction{% endblock %}
+
+{%block content %}
 <form class="site-form" action="{% url 'bank:create_transfer_trx'%}" method="post">
     {% csrf_token %}
     <label for="from_client_id">From Client ID:</label>
@@ -20,32 +20,30 @@
            id="to_client_id" }>
     <input type="submit" id="search_button" name="search_button" value="Search">
     <h2>Transfer From</h2>
-    <fieldset disabled>
+    <fieldset class="module aligned " disabled>
         {{ from_client_form.as_p }}
-        <label for="from_client_old_bal">Current Balance:</label>
+        <p><label for="from_client_old_bal">Current Balance:</label>
         <input type="number" name="from_client_old_bal" maxlength="20" required value={{ from_client_old_bal }}
-               id="from_client_old_bal">
-        <label for="from_client_new_bal">New Balance:</label>
+               id="from_client_old_bal"></p>
+        <p><label for="from_client_new_bal">New Balance:</label>
         <input type="number" name="from_client_new_bal" maxlength="20" required value={{ from_client_new_bal }}
-               id="from_client_new_bal">
+               id="from_client_new_bal"></p>
     </fieldset>
     <h2>Transfer To</h2>
-    <fieldset disabled>
+    <fieldset class="module aligned " disabled>
         {{ to_client_form.as_p }}
-        <label for="to_client_old_bal">Current Balance:</label>
+        <p><label for="to_client_old_bal">Current Balance:</label>
         <input type="number" name="to_client_old_bal" maxlength="20" required value={{ to_client_old_bal }}
-               id="to_client_old_bal">
-        <label for="to_client_new_bal">New Balance:</label>
+               id="to_client_old_bal"></p>
+        <p><label for="to_client_new_bal">New Balance:</label>
         <input type="number" name="to_client_new_bal" maxlength="20" required value={{ to_client_new_bal }}
-               id="to_client_new_bal">
+               id="to_client_new_bal"></p>
     </fieldset>
     <h2>Transfer Transaction</h2>
-    <fieldset>
+    <fieldset class="module aligned ">
         {{form.as_p}}
         <input type="submit" id="confirm_button" name="confirm_button" {{ hidden }} value="Confirm">
         <input type="submit" id="calculate_button" name="calculate_button" {{ hidden }} value="Calculate">
     </fieldset>
 </form>
-
-</body>
-</html>
+{% endblock %}

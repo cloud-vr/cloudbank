@@ -1,23 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Delete Client</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+{% extends "base_layout.html" %}
+{% load static %}
 
-<body>
+{% block title %}Delete Client{% endblock %}
 
-<h1>Delete Client</h1>
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+{% endblock %}
 
+{% block content_title %}Delete Client{% endblock %}
+
+{%block content %}
 <form class="site-form" action="{% url 'bank:delete_client'%}" method="post">
     {% csrf_token %}
     <label for="client_id">Client ID:</label>
     <input type="number" name="client_id" maxlength="20" required {{ readonly }} value={{ client_id }} id="client_id">
     <input type="submit" id="search_button" name="search_button" value="Search">
-    {{form.as_p}}
+    <fieldset class="module aligned ">
+        {{form.as_p}}
+    </fieldset>
     <input type="submit" id="delete_button" name="delete_button" {{ hidden }} value="Delete">
 </form>
-
-</body>
-</html>
+{% endblock %}

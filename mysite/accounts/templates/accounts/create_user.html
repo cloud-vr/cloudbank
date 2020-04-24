@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Cloud Bank Login Page</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-<h1>Create System User</h1>
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block title %}Create System User{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">{% endblock %}
+
+{% block content_title %}Create System User{% endblock %}
+
+{%block content %}
 <form class="site-form" action="{% url 'accounts:create_user' %}" method="post">
     {% csrf_token %}
     {{form.as_p}}
     <input type="submit" value="Create">
 </form>
-
-</body>
-</html>
+{% endblock %}

@@ -1,26 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Application List</title>
-</head>
+{% extends "base_layout.html" %}
+{% load static %}
 
-<body>
+{% block title %}Application List{% endblock %}
 
-<h1>Application List</h1>
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/dashboard.css">{% endblock %}
 
-<ul>
-    <a href="{% url 'accounts:user_list' %}"><h2>System Users</h2></a>
-    <a href="{% url 'bank:client_accounts' %}"><h2>Client Accounts</h2></a>
-    <a href="{% url 'bank:view_deposit_trx' %}"><h2>Deposit</h2></a>
-    <a href="{% url 'bank:view_withdraw_trx' %}"><h2>Withdrawal</h2></a>
-    <a href="{% url 'bank:view_transfer_trx' %}"><h2>Transfers</h2></a>
-</ul>
+{% block content_title %}Application List{% endblock %}
 
-<form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-</form>
+{%block content %}
+<div id="content-main">
+    <div class="static-data module">
+        <table width="300">
+            <caption>
+                <a href="" class="section" title="Static Data">Static Data</a>
+            </caption>
 
-</body>
-</html>
+            <tr class="model-user">
+                <th scope="row"><a href="{% url 'accounts:user_list' %}">System Users</a></th>
+                <td><a href="{% url 'accounts:create_user' %}" class="addlink">Add</a></td>
+                <td><a href="/admin/auth/group/" class="changelink">Edit</a></td>
+            </tr>
+
+            <tr class="model-client">
+                <th scope="row"><a href="{% url 'bank:client_accounts' %}">Client Accounts</a></th>
+                <td><a href="{% url 'bank:create_client' %}" class="addlink">Add</a></td>
+                <td><a href="{% url 'bank:edit_client' %}" class="changelink">Edit</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="transactions module">
+        <table width="300">
+            <caption>
+                <a href="" class="section" title="Transactions">Transactions</a>
+            </caption>
+
+            <tr class="model-deposit">
+                <th scope="row"><a href="{% url 'bank:view_deposit_trx' %}">Deposit</a></th>
+                <td><a href="{% url 'bank:create_deposit_trx' %}" class="addlink">Create New</a></td>
+            </tr>
+
+            <tr class="model-withdrawal">
+                <th scope="row"><a href="{% url 'bank:view_withdraw_trx' %}">Withdrawal</a></th>
+                <td><a href="{% url 'bank:create_withdraw_trx' %}" class="addlink">Create New</a></td>
+            </tr>
+
+            <tr class="model-transfers">
+                <th scope="row"><a href="{% url 'bank:view_transfer_trx' %}">Transfers</a></th>
+                <td><a href="{% url 'bank:create_transfer_trx' %}" class="addlink">Create New</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

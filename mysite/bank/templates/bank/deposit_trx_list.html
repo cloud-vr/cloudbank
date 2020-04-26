@@ -4,6 +4,7 @@
 {% block title %}Deposit Transaction List{% endblock %}
 
 {% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
 {% endblock %}
 
 {% block content_title %}Deposit Transaction List{% endblock %}
@@ -16,32 +17,51 @@
 {% endblock %}
 
 {%block content %}
-<a href="{% url 'bank:create_deposit_trx'%}"><input type="submit" id="new_button" name="new_button" value="New"></a>
-<br><br>
+<ul class="object-tools">
+    <li>
+        <a href="{% url 'bank:create_deposit_trx'%}" class="addlink">
+            New Deposit
+        </a>
+    </li>
+</ul>
 
-<form class="site-form" action="{% url 'bank:view_deposit_trx'%}" method="post">
-    {% csrf_token %}
-    <label for="client_id">Client ID:</label>
-    <input type="number" name="client_id" maxlength="20" required value={{ client_id }} id="client_id">
-    <input type="submit" id="search_button" name="search_button" value="Search">
-    <br><br>
-    <table border="2" width="600">
-        <tr>
-            <th>Trx Date:</th>
-            <th>Trx ref:</th>
-            <th>Client:</th>
-            <th>Deposit Amount:</th>
-            <th>Currency:</th>
-        </tr>
-        {% for deposit_trx in obj_list_deposit_trx %}
-        <tr>
-            <td>{{ deposit_trx.trx_date }}</td>
-            <td>{{ deposit_trx.trx_ref }}</td>
-            <td>{{ deposit_trx.client }}</td>
-            <td>{{ deposit_trx.deposit_amt }}</td>
-            <td>{{ deposit_trx.curr }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</form>
+<div class="module filtered" id="changelist">
+    <div id="toolbar">
+        <form id="changelist-search" method="get">
+            <div><!-- DIV needed for valid HTML -->
+                <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Search"></label>
+                <input type="text" size="40" name="q" value="" id="searchbar" autofocus>
+                <input type="submit" id="search_button" name="search_button" value="Search">
+            </div>
+        </form>
+    </div>
+
+    <form class="site-form" action="{% url 'bank:view_deposit_trx' %}" method="post">
+        {% csrf_token %}
+        <div class="results">
+            <table id="result_list">
+                <thead>
+                <tr>
+                    <th>
+                        <div class="text"><span>Trx ref:</span></div>
+                    </th>
+                    <th>Trx Date:</th>
+                    <th>Client:</th>
+                    <th>Deposit Amount:</th>
+                    <th>Currency:</th>
+                </tr>
+                </thead>
+                {% for deposit_trx in object_list %}
+                <tr>
+                    <td><a href="">{{ deposit_trx.trx_ref }}</a></td>
+                    <td>{{ deposit_trx.trx_date }}</td>
+                    <td>{{ deposit_trx.client }}</td>
+                    <td>{{ deposit_trx.deposit_amt }}</td>
+                    <td>{{ deposit_trx.curr }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+</div>
 {% endblock %}

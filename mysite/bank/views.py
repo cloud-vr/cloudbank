@@ -3,8 +3,45 @@ from datetime import date
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView
 
 from . import forms, models
+
+
+class DepositTransactionList(ListView):
+    model = models.DepositTransaction
+    template_name = 'bank/deposit_trx_list.html'
+
+    def get_queryset(self):
+        if 'q' in self.request.GET:
+            l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
+            return models.DepositTransaction.objects.filter(client=l_client)
+        else:
+            return models.DepositTransaction.objects.all()
+
+
+class WithdrawTransactionList(ListView):
+    model = models.WithdrawTransaction
+    template_name = 'bank/withdraw_trx_list.html'
+
+    def get_queryset(self):
+        if 'q' in self.request.GET:
+            l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
+            return models.WithdrawTransaction.objects.filter(client=l_client)
+        else:
+            return models.WithdrawTransaction.objects.all()
+
+
+class TransferTransactionList(ListView):
+    model = models.WithdrawTransaction
+    template_name = 'bank/transfer_trx_list.html'
+
+    def get_queryset(self):
+        if 'q' in self.request.GET:
+            l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
+            return models.TransferTransaction.objects.filter(from_client=l_client)
+        else:
+            return models.TransferTransaction.objects.all()
 
 
 @login_required(login_url="/accounts/login")
@@ -121,26 +158,6 @@ def delete_client(request):
 
 
 @login_required(login_url="/accounts/login")
-def view_deposit_trx(request):
-    l_context = {}
-    l_template = 'bank/deposit_trx_list.html'
-    # l_redirect = ''
-    if request.method == 'POST':
-        # if search button clicked
-        if 'client_id' in request.POST:
-            # checks if client id is populated
-            if request.POST['client_id']:
-                if 'search_button' in request.POST:
-                    obj_list_deposit_trx = models.DepositTransaction.objects.filter(client=request.POST['client_id'])
-                    l_context = {'obj_list_deposit_trx': obj_list_deposit_trx}
-    else:
-        # GET METHOD: initial landing page of view deposit transactions
-        obj_list_deposit_trx = models.DepositTransaction.objects.all()
-        l_context = {'obj_list_deposit_trx': obj_list_deposit_trx}
-    return render(request, l_template, l_context)
-
-
-@login_required(login_url="/accounts/login")
 def create_deposit_trx(request):
     l_context = {'hidden': 'hidden'}
     l_template = 'bank/deposit_trx.html'
@@ -202,27 +219,6 @@ def create_deposit_trx(request):
 
 
 @login_required(login_url="/accounts/login")
-def view_withdraw_trx(request):
-    l_context = {}
-    l_template = 'bank/withdraw_trx_list.html'
-    l_redirect = ''
-    if request.method == 'POST':
-        # if search button clicked
-        if 'client_id' in request.POST:
-            # checks if client id is populated
-            if request.POST['client_id']:
-                # upon click of search button
-                if 'search_button' in request.POST:
-                    obj_list_withdraw_trx = models.WithdrawTransaction.objects.filter(client=request.POST['client_id'])
-                    l_context = {'obj_list_withdraw_trx': obj_list_withdraw_trx}
-    else:
-        # GET METHOD: initial landing page of view deposit transactions
-        obj_list_withdraw_trx = models.WithdrawTransaction.objects.all()
-        l_context = {'obj_list_withdraw_trx': obj_list_withdraw_trx}
-    return render(request, l_template, l_context)
-
-
-@login_required(login_url="/accounts/login")
 def create_withdraw_trx(request):
     l_context = {'hidden': 'hidden'}
     l_template = 'bank/withdraw_trx.html'
@@ -278,28 +274,6 @@ def create_withdraw_trx(request):
     else:
         # GET METHOD: Initial landing page of edit client
         l_context = l_context
-    return render(request, l_template, l_context)
-
-
-@login_required(login_url="/accounts/login")
-def view_transfer_trx(request):
-    l_context = {}
-    l_template = 'bank/transfer_trx_list.html'
-    # l_redirect = ''
-    if request.method == 'POST':
-        # if search button clicked
-        if 'client_id' in request.POST:
-            # checks if client id is populated
-            if request.POST['client_id']:
-                # upon click of search button
-                if 'search_button' in request.POST:
-                    obj_list_transfer_trx = models.TransferTransaction.objects.filter(
-                        from_client=request.POST['client_id'])
-                    l_context = {'obj_list_transfer_trx': obj_list_transfer_trx}
-    else:
-        # GET METHOD: initial landing page of view deposit transactions
-        obj_list_transfer_trx = models.TransferTransaction.objects.all()
-        l_context = {'obj_list_transfer_trx': obj_list_transfer_trx}
     return render(request, l_template, l_context)
 
 

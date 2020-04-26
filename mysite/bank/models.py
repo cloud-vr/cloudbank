@@ -16,7 +16,7 @@ class Client(models.Model):
     created_by = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.fname
+        return self.fname + " " + self.lname
 
 
 class DepositTransaction(models.Model):

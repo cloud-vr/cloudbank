@@ -19,7 +19,7 @@
 {%block content %}
 <ul class="object-tools">
     <li>
-        <a href="{% url 'bank:create_deposit_trx'%}" class="addlink">
+        <a href="{% url 'bank:create_transfer_trx'%}" class="addlink">
             New Transfer
         </a>
     </li>
@@ -36,7 +36,7 @@
         </form>
     </div>
 
-    <form class="site-form" action="{% url 'bank:view_transfer_trx'%}" method="post">
+    <form class="site-form" action="{% url 'bank:transfer_trx_list'%}" method="post">
         {% csrf_token %}
         <div class="results">
             <table id="result_list">

@@ -35,7 +35,7 @@
         </form>
     </div>
 
-    <form class="site-form" action="{% url 'bank:view_withdraw_trx'%}" method="post">
+    <form class="site-form" action="{% url 'bank:withdraw_trx_list'%}" method="post">
         {% csrf_token %}
         <div class="results">
             <table id="result_list">

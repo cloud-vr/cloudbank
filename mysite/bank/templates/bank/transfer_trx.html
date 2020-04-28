@@ -13,73 +13,31 @@
 <div class="breadcrumbs">
     <a href="{% url 'bank:application_list' %}">Application List</a> >
     <a href="{% url 'bank:application_list' %}">Transactions</a> >
-    <a href="{% url 'bank:view_transfer_trx' %}">Transfer Transaction List</a> > New Transfer
+    <a href="{% url 'bank:transfer_trx_list' %}">Transfer Transaction List</a> > New Transfer
 </div>
 {% endblock %}
 
 {%block content %}
 <form class="site-form" action="{% url 'bank:create_transfer_trx'%}" method="post">
     {% csrf_token %}
-    <label for="from_client_id">From Client ID:</label>
-    <input type="number" name="from_client_id" maxlength="20" required {{ readonly }} value={{ from_client_id }}
-           id="from_client_id">
-    <label for="to_client_id">To Client ID:</label>
-    <input type="number" name="to_client_id" maxlength="20" required {{ readonly }} value={{ to_client_id }}
-           id="to_client_id" }>
-    <input type="submit" id="search_button" name="search_button" value="Search">
-    <br><br>
     <div class="module">
-        <h2>Transfer From</h2></div>
-    <fieldset class="module aligned " disabled>
-        {% for item in from_client_form %}
-        <div class="form-row">
-            <div>
-                <label class="required">{{ item.label }}</label>
-                {{ item }}
-            </div>
-        </div>
-        {% endfor %}
-        <p><label for="from_client_old_bal">Current Balance:</label>
-            <input type="number" name="from_client_old_bal" maxlength="20" required value={{ from_client_old_bal }}
-                   id="from_client_old_bal"></p>
-        <p><label for="from_client_new_bal">New Balance:</label>
-            <input type="number" name="from_client_new_bal" maxlength="20" required value={{ from_client_new_bal }}
-                   id="from_client_new_bal"></p>
-    </fieldset>
+        <h2 class="section">Transaction Details</h2>
+    </div>
     <div class="module">
-        <h2>Transfer To</h2></div>
-    <fieldset class="module aligned " disabled>
-        {% for item in to_client_form %}
-        <div class="form-row">
-            <div>
-                <label class="required">{{ item.label }}</label>
-                {{ item }}
+        <fieldset class="module aligned ">
+            {% for item in form %}
+            <div class="form-row">
+                <div>
+                    <label class="required">{{ item.label }}</label>
+                    {{ item }}
+                </div>
             </div>
-        </div>
-        {% endfor %}
-        <p><label for="to_client_old_bal">Current Balance:</label>
-            <input type="number" name="to_client_old_bal" maxlength="20" required value={{ to_client_old_bal }}
-                   id="to_client_old_bal"></p>
-        <p><label for="to_client_new_bal">New Balance:</label>
-            <input type="number" name="to_client_new_bal" maxlength="20" required value={{ to_client_new_bal }}
-                   id="to_client_new_bal"></p>
-    </fieldset>
-    <div class="module">
-    <h2>Transfer Transaction</h2></div>
-    <fieldset class="module aligned ">
-        {% for item in form %}
-        <div class="form-row">
-            <div>
-                <label class="required">{{ item.label }}</label>
-                {{ item }}
+            {% endfor %}
+            <div class="submit-row">
+                <input type="submit" id="confirm_and_add_another" name="confirm_and_add_another"
+                       value="Confirm and add another">
+                <input type="submit" id="confirm" name="confirm" value="CONFIRM">
             </div>
-        </div>
-        {% endfor %}
-
-        <div class="submit-row">
-            <input type="submit" id="calculate_button" name="calculate_button" {{ hidden }} value="Calculate">
-            <input type="submit" id="confirm_button" name="confirm_button" {{ hidden }} value="CONFIRM">
-        </div>
-    </fieldset>
+        </fieldset>
 </form>
 {% endblock %}

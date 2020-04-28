@@ -13,32 +13,16 @@
 <div class="breadcrumbs">
     <a href="{% url 'bank:application_list' %}">Application List</a> >
     <a href="{% url 'bank:application_list' %}">Transactions</a> >
-    <a href="{% url 'bank:view_deposit_trx' %}">Deposit Transaction List</a> > New Deposit
+    <a href="{% url 'bank:deposit_trx_list' %}">Deposit Transaction List</a> > New Deposit
 </div>
 {% endblock %}
 
 {%block content %}
 <form class="site-form" action="{% url 'bank:create_deposit_trx'%}" method="post">
     {% csrf_token %}
-    <label for="client_id">Client ID:</label>
-    <input type="number" name="client_id" maxlength="20" required {{ readonly }} value={{ client_id }} id="client_id">
-    <input type="submit" id="search_button" name="search_button" value="Search">
-
-    <br><br>
     <div class="module">
-        <h2>Client Information</h2></div>
-    <fieldset class="module aligned " disabled>
-        {% for item in client_info %}
-        <div class="form-row">
-            <div>
-                <label class="required">{{ item.label }}</label>
-                {{ item }}
-            </div>
-        </div>
-        {% endfor %}
-    </fieldset>
-        <div class="module">
-    <h2 class="section">Deposit Transaction</h2></div>
+        <h2 class="section">Transaction Details</h2>
+    </div>
     <fieldset class="module aligned ">
         {% for item in form %}
         <div class="form-row">
@@ -48,10 +32,9 @@
             </div>
         </div>
         {% endfor %}
-
         <div class="submit-row">
-            <input type="submit" id="calculate_button" name="calculate_button" {{ hidden }} value="Calculate">
-            <input type="submit" id="deposit_button" name="deposit_button" {{ hidden }} value="CONFIRM">
+            <input type="submit" id="confirm_and_add_another" name="confirm_and_add_another"  value="Confirm and add another">
+            <input type="submit" id="confirm" name="confirm" value="CONFIRM">
         </div>
     </fieldset>
 </form>

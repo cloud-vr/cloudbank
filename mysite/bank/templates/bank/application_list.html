@@ -37,17 +37,17 @@
             </caption>
 
             <tr class="model-deposit">
-                <th scope="row"><a href="{% url 'bank:view_deposit_trx' %}">Deposit</a></th>
+                <th scope="row"><a href="{% url 'bank:deposit_trx_list' %}">Deposit</a></th>
                 <td><a href="{% url 'bank:create_deposit_trx' %}" class="addlink">Create New</a></td>
             </tr>
 
             <tr class="model-withdrawal">
-                <th scope="row"><a href="{% url 'bank:view_withdraw_trx' %}">Withdrawal</a></th>
+                <th scope="row"><a href="{% url 'bank:withdraw_trx_list' %}">Withdrawal</a></th>
                 <td><a href="{% url 'bank:create_withdraw_trx' %}" class="addlink">Create New</a></td>
             </tr>
 
             <tr class="model-transfers">
-                <th scope="row"><a href="{% url 'bank:view_transfer_trx' %}">Transfers</a></th>
+                <th scope="row"><a href="{% url 'bank:transfer_trx_list' %}">Transfers</a></th>
                 <td><a href="{% url 'bank:create_transfer_trx' %}" class="addlink">Create New</a></td>
             </tr>
         </table>

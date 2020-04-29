@@ -5,7 +5,6 @@
 
 {% block extrastyle %}
 <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
-<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
 {% endblock %}
 
 {% block content_title %}Create Client{% endblock %}
@@ -14,13 +13,16 @@
 <div class="breadcrumbs">
     <a href="{% url 'bank:application_list' %}">Application List</a> >
     <a href="{% url 'bank:application_list' %}">Static Data</a> >
-    <a href="{% url 'bank:client_accounts' %}">Client Accounts</a> > Create Client
+    <a href="{% url 'bank:client_list' %}">Client List</a> > Create Client
 </div>
 {% endblock %}
 
 {%block content %}
 <form class="site-form" action="{% url 'bank:create_client'%}" method="post">
     {% csrf_token %}
+    <div class="module">
+        <h2 class="section">Transaction Details</h2>
+    </div>
     <fieldset class="module aligned ">
         {% for item in form %}
         <div class="form-row">
@@ -31,9 +33,9 @@
         </div>
         {% endfor %}
     </fieldset>
-
-    <div class="submit-row">
-        <input type="submit" value="Save" class="default" name="_save">
-    </div>
+        <div class="submit-row">
+            <input type="submit" name="save_and_add_another"  value="Save and add another">
+            <input type="submit" name="confirm" value="SAVE">
+        </div>
 </form>
 {% endblock %}

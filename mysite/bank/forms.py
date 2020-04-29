@@ -7,8 +7,13 @@ from django.forms import ModelForm
 from . import models
 
 
-class CreateClient(ModelForm):
-    balance = forms.FloatField(widget=forms.TextInput(attrs={'readonly': ''}))
+class ClientForm(ModelForm):
+    acct_num = forms.IntegerField(widget=forms.TextInput(attrs={'readonly': '',
+                                                             'style': 'background-color:#d3d3d3;',
+                                                             'value': random.randint(1000000000, 9999999999)}))
+    balance = forms.FloatField(widget=forms.TextInput(attrs={'readonly': '',
+                                                             'style': 'background-color:#d3d3d3;',
+                                                             'value': 0}))
 
     class Meta:
         model = models.Client
@@ -18,8 +23,7 @@ class CreateClient(ModelForm):
                   'acct_num',
                   'mobile_num',
                   'email_addr',
-                  'balance',
-                  'created_by']
+                  'balance']
 
 
 class CreateDepositTrx(ModelForm):

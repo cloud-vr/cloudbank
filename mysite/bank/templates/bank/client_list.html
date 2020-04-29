@@ -1,26 +1,26 @@
 {% extends "base_layout.html" %}
 {% load static %}
 
-{% block title %}System User List{% endblock %}
+{% block title %}Client List{% endblock %}
 
 {% block extrastyle %}
 <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
 {% endblock %}
 
-{% block content_title %}System User List{% endblock %}
+{% block content_title %}Client List{% endblock %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
     <a href="{% url 'bank:application_list' %}">Application List</a> >
-    <a href="{% url 'bank:application_list' %}">Static Data</a> > System User List
+    <a href="{% url 'bank:application_list' %}">Static Data</a> > Client List
 </div>
 {% endblock %}
 
 {%block content %}
 <ul class="object-tools">
     <li>
-        <a href="{% url 'accounts:create_user' %}" class="addlink">
-            New User
+        <a href="{% url 'bank:create_client' %}" class="addlink">
+            New Client
         </a>
     </li>
 </ul>
@@ -35,23 +35,29 @@
             </div>
         </form>
     </div>
+
     <form class="site-form" action="{% url 'bank:client_list' %}" method="post">
         {% csrf_token %}
         <div class="results">
             <table id="result_list">
                 <thead>
                 <tr>
-
                     <th>
-                        <div class="text"><span>Username:</span></div>
+                        <div class="text"><span>First Name:</span></div>
                     </th>
+                    <th>Last Name:</th>
+                    <th>Account Number:</th>
                     <th>Email Address:</th>
+                    <th>Balance:</th>
                 </tr>
                 </thead>
-                {% for user in obj_list_user %}
+                {% for obj in object_list %}
                 <tr>
-                    <td><a href="update_client/{{ user.id }}">{{ user.username }}</a></td>
-                    <td>{{ user.email }}</td>
+                    <td><a href="update_client/{{ obj.id }}">{{ obj.fname }}</a></td>
+                    <td>{{ obj.lname }}</td>
+                    <td>{{ obj.acct_num }}</td>
+                    <td>{{ obj.email_addr }}</td>
+                    <td>{{ obj.balance }}</td>
                 </tr>
                 {% endfor %}
             </table>

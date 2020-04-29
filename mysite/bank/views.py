@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from . import forms, models
 
@@ -110,114 +110,51 @@ class TransferCreate(LoginRequiredMixin, CreateView):
         return response
 
 
+class ClientList(LoginRequiredMixin, ListView):
+    model = models.Client
+    template_name = 'bank/client_list.html'
+
+    def get_queryset(self):
+        if 'q' in self.request.GET:
+            return models.Client.objects.filter(pk=self.request.GET['q'])
+        else:
+            return models.Client.objects.all()
+
+
+class ClientCreate(LoginRequiredMixin, CreateView):
+    model = models.Client
+    form_class = forms.ClientForm
+    template_name = 'bank/create_client.html'
+    success_url = 'client_list'
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        response = super().form_valid(form)
+        if 'save_and_add_another' in self.request.POST:
+            return redirect('bank:create_client')
+        return response
+
+
+class ClientUpdate(LoginRequiredMixin, UpdateView):
+    model = models.Client
+    form_class = forms.ClientForm
+    template_name = 'bank/update_client.html'
+    success_url = 'http://127.0.0.1:8000/bank/client_list'
+
+    def get_context_data(self, **kwargs):
+        obj_client = get_object_or_404(models.Client, id=self.kwargs['pk'])
+        form = forms.ClientForm(instance=obj_client)
+        context = {'form': form}
+        return context
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        response = super().form_valid(form)
+        if 'save_and_add_another' in self.request.POST:
+            return redirect('bank:create_client')
+        return response
+
+
 @login_required(login_url="/accounts/login")
 def application_list(request):
     return render(request, 'bank/application_list.html')
-
-
-@login_required(login_url="/accounts/login")
-def client_accounts(request):
-    return render(request, 'bank/client_accounts.html')
-
-
-@login_required(login_url="/accounts/login")
-def view_client(request):
-    l_context = {}
-    l_template = 'bank/view_client.html'
-    # l_redirect = ''
-    if request.method == 'POST':
-        # if search button clicked
-        if 'client_id' in request.POST:
-            # checks if client id is populated
-            if request.POST['client_id']:
-                if 'search_button' in request.POST:
-                    # id of the searched client
-                    l_client_id = request.POST['client_id']
-                    obj_searched_client = get_object_or_404(models.Client, pk=l_client_id)
-                    f_create_client = forms.CreateClient(instance=obj_searched_client)
-                    l_context = {'form': f_create_client,
-                                 'client_id': l_client_id,
-                                 'readonly': 'readonly'}  # sets the client id input box to readonly
-    else:
-        # GET METHOD
-        l_context = l_context
-    return render(request, l_template, l_context)
-
-
-@login_required(login_url="/accounts/login")
-def create_client(request):
-    l_context = {}
-    l_template = 'bank/create_client.html'
-    l_redirect = 'bank:client_accounts'
-    if request.method == 'POST':
-        f_create_client = forms.CreateClient(request.POST)
-        if f_create_client.is_valid():
-            ft_create_client_ = f_create_client.save(commit=False)
-            ft_create_client_.created_by = request.user
-            ft_create_client_.save()
-            return redirect(l_redirect)
-    else:
-        # GET METHOD
-        f_create_client = forms.CreateClient(initial={'created_by': request.user,
-                                                      'balance': 0})
-        l_context = {'form': f_create_client}
-    return render(request, l_template, l_context)
-
-
-@login_required(login_url="/accounts/login")
-def edit_client(request):
-    l_context = {'hidden': 'hidden'}
-    l_template = 'bank/edit_client.html'
-    l_redirect = 'bank:client_accounts'
-    if request.method == 'POST':
-        # if search button clicked
-        if 'client_id' in request.POST:
-            # checks if client id is populated
-            if request.POST['client_id']:
-                l_client_id = request.POST['client_id']
-                obj_searched_client = get_object_or_404(models.Client, pk=l_client_id)
-                # if search button is clicked, return the client form with the details of the searched client
-                if 'search_button' in request.POST:
-                    f_create_client = forms.CreateClient(instance=obj_searched_client)
-                    l_context = {'form': f_create_client,
-                                 'client_id': l_client_id,
-                                 'readonly': 'readonly'}
-                elif 'save_button' in request.POST:
-                    f_create_client = forms.CreateClient(request.POST, instance=obj_searched_client)
-                    if f_create_client.is_valid():
-                        ft_create_client = f_create_client.save(commit=False)
-                        ft_create_client.created_by = request.user
-                        ft_create_client.save()
-                        return redirect(l_redirect)
-    else:
-        # GET METHOD
-        l_context = l_context
-    return render(request, l_template, l_context)
-
-
-@login_required(login_url="/accounts/login")
-def delete_client(request):
-    l_context = {'hidden': 'hidden'}
-    l_template = 'bank/delete_client.html'
-    l_redirect = 'bank:client_accounts'
-    if request.method == 'POST':
-        # if search button clicked
-        if 'client_id' in request.POST:
-            # checks if client id is populated
-            if request.POST['client_id']:
-                l_client_id = request.POST['client_id']
-                obj_searched_client = get_object_or_404(models.Client, pk=l_client_id)
-                # if search button is clicked, return the client form with the details of the searched client
-                if 'search_button' in request.POST:
-                    f_create_client = forms.CreateClient(instance=obj_searched_client)
-                    l_context = {'form': f_create_client,
-                                 'client_id': l_client_id,
-                                 'readonly': 'readonly'}
-                # if delete button clicked
-                elif 'delete_button' in request.POST:
-                    obj_searched_client.delete()
-                    return redirect(l_redirect)
-    else:
-        # GET METHOD
-        l_context = l_context
-    return render(request, l_template, l_context)

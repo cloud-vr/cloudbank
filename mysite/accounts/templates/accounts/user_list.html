@@ -45,13 +45,15 @@
                     <th>
                         <div class="text"><span>Username:</span></div>
                     </th>
-                    <th>Email Address:</th>
+                    <th>Last Login:</th>
+                    <th>Date Joined:</th>
                 </tr>
                 </thead>
-                {% for user in obj_list_user %}
+                {% for user in object_list %}
                 <tr>
-                    <td><a href="update_client/{{ user.id }}">{{ user.username }}</a></td>
-                    <td>{{ user.email }}</td>
+                    <td><a href="update_user/{{ user.id }}">{{ user.username }}</a></td>
+                    <td>{{ user.last_login }}</td>
+                    <td>{{ user.date_joined }}</td>
                 </tr>
                 {% endfor %}
             </table>

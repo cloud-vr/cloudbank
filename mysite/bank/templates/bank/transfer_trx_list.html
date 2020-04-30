@@ -54,7 +54,7 @@
                 </thead>
                 {% for transfer_trx in object_list %}
                 <tr>
-                    <td><a href="">{{ transfer_trx.trx_ref }}</a></td>
+                    <td><a href="view_transfer_trx/{{ transfer_trx.id }}">{{ transfer_trx.trx_ref }}</a></td>
                     <td>{{ transfer_trx.trx_date }}</td>
                     <td>{{ transfer_trx.from_client }}</td>
                     <td>{{ transfer_trx.to_client }}</td>

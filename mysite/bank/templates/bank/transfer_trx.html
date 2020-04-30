@@ -5,6 +5,19 @@
 
 {% block extrastyle %}
 <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+<style>
+a.back {
+background: #79aec8;
+padding: 10px 15px;
+border: none;
+border-radius: 4px;
+color: #fff;
+cursor: pointer;
+font-size: 13px;
+}
+
+
+</style>
 {% endblock %}
 
 {% block content_title %}Transfer Transaction{% endblock %}
@@ -24,7 +37,7 @@
         <h2 class="section">Transaction Details</h2>
     </div>
     <div class="module">
-        <fieldset class="module aligned ">
+        <fieldset class="module aligned " {{ disabled }}>
             {% for item in form %}
             <div class="form-row">
                 <div>
@@ -34,9 +47,10 @@
             </div>
             {% endfor %}
             <div class="submit-row">
-                <input type="submit" id="confirm_and_add_another" name="confirm_and_add_another"
+                <a class="back" href="{% url 'bank:deposit_trx_list' %}">Back to list</a>
+                <input type="submit" id="confirm_and_add_another"  {{ hidden }} name="confirm_and_add_another"
                        value="Confirm and add another">
-                <input type="submit" id="confirm" name="confirm" value="CONFIRM">
+                <input type="submit" id="confirm" name="confirm"  {{ hidden }} value="CONFIRM">
             </div>
         </fieldset>
 </form>

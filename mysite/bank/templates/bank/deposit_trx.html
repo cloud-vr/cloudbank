@@ -5,6 +5,18 @@
 
 {% block extrastyle %}
 <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+<style>
+a.back {
+background: #79aec8;
+padding: 10px 15px;
+border: none;
+border-radius: 4px;
+color: #fff;
+cursor: pointer;
+font-size: 13px;
+}
+
+</style>
 {% endblock %}
 
 {% block content_title %}Deposit Transaction{% endblock %}
@@ -18,24 +30,22 @@
 {% endblock %}
 
 {%block content %}
-<form class="site-form" action="{% url 'bank:create_deposit_trx'%}" method="post">
-    {% csrf_token %}
-    <div class="module">
-        <h2 class="section">Transaction Details</h2>
+<div class="module">
+    <h2 class="section">Transaction Details</h2>
+</div>
+<fieldset class="module aligned " {{ disabled }}>
+    {% for item in form %}
+    <div class="form-row">
+        <div>
+            <label class="required">{{ item.label }}</label>
+            {{ item }}
+        </div>
     </div>
-    <fieldset class="module aligned ">
-        {% for item in form %}
-        <div class="form-row">
-            <div>
-                <label class="required">{{ item.label }}</label>
-                {{ item }}
-            </div>
-        </div>
-        {% endfor %}
-        <div class="submit-row">
-            <input type="submit" id="confirm_and_add_another" name="confirm_and_add_another"  value="Confirm and add another">
-            <input type="submit" id="confirm" name="confirm" value="CONFIRM">
-        </div>
-    </fieldset>
-</form>
+    {% endfor %}
+    <div class="submit-row">
+        <a class="back" href="{% url 'bank:deposit_trx_list' %}">Back to list</a>
+        <input type="submit" name="confirm_and_add_another" {{ hidden }} value="Confirm and add another">
+        <input type="submit" name="confirm" {{ hidden }} value="CONFIRM">
+    </div>
+</fieldset>
 {% endblock %}

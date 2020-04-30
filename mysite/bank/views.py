@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
 
 from . import forms, models
 
@@ -42,6 +42,22 @@ class DepositCreate(LoginRequiredMixin, CreateView):
         return response
 
 
+class DepositView(LoginRequiredMixin, FormView):
+    model = models.DepositTransaction
+    template_name = 'bank/deposit_trx.html'
+    success_url = 'deposit_trx_list'
+
+    def get_context_data(self, **kwargs):
+        l_id = self.kwargs['pk']
+        obj_deposit_trx = get_object_or_404(models.DepositTransaction, pk=l_id)
+        form = forms.CreateDepositTrx(instance=obj_deposit_trx)
+        context = {'form': form,
+                   'id': l_id,
+                   'hidden': 'hidden',
+                   'disabled': 'disabled'}
+        return context
+
+
 class WithdrawTransactionList(LoginRequiredMixin, ListView):
     model = models.WithdrawTransaction
     template_name = 'bank/withdraw_trx_list.html'
@@ -73,6 +89,22 @@ class WithdrawCreate(LoginRequiredMixin, CreateView):
         if 'confirm_and_add_another' in self.request.POST:
             return redirect('bank:create_withdraw_trx')
         return response
+
+
+class WithdrawView(LoginRequiredMixin, FormView):
+    model = models.WithdrawTransaction
+    template_name = 'bank/withdraw_trx.html'
+    success_url = 'withdraw_trx_list'
+
+    def get_context_data(self, **kwargs):
+        l_id = self.kwargs['pk']
+        obj_withdraw_trx = get_object_or_404(models.WithdrawTransaction, pk=l_id)
+        form = forms.CreateWithdrawTrx(instance=obj_withdraw_trx)
+        context = {'form': form,
+                   'id': l_id,
+                   'hidden': 'hidden',
+                   'disabled': 'disabled'}
+        return context
 
 
 class TransferTransactionList(LoginRequiredMixin, ListView):
@@ -110,6 +142,22 @@ class TransferCreate(LoginRequiredMixin, CreateView):
         return response
 
 
+class TransferView(LoginRequiredMixin, FormView):
+    model = models.TransferTransaction
+    template_name = 'bank/transfer_trx.html'
+    success_url = 'transfer_trx_list'
+
+    def get_context_data(self, **kwargs):
+        l_id = self.kwargs['pk']
+        obj_transfer_trx = get_object_or_404(models.TransferTransaction, pk=l_id)
+        form = forms.CreateTransferTrx(instance=obj_transfer_trx)
+        context = {'form': form,
+                   'id': l_id,
+                   'hidden': 'hidden',
+                   'disabled': 'disabled'}
+        return context
+
+
 class ClientList(LoginRequiredMixin, ListView):
     model = models.Client
     template_name = 'bank/client_list.html'
@@ -137,14 +185,12 @@ class ClientCreate(LoginRequiredMixin, CreateView):
 
 class ClientUpdate(LoginRequiredMixin, UpdateView):
     model = models.Client
-    form_class = forms.ClientForm
     template_name = 'bank/update_client.html'
-    success_url = 'http://127.0.0.1:8000/bank/client_list'
+    success_url = 'http://127.0.0.1:8000/bank/client_list'  # TODO fix this
 
     def get_context_data(self, **kwargs):
-        obj_client = get_object_or_404(models.Client, id=self.kwargs['pk'])
-        form = forms.ClientForm(instance=obj_client)
-        context = {'form': form}
+        form = forms.ClientForm(instance=self.object)
+        context = {'form': form, 'id': self.object.id}
         return context
 
     def form_valid(self, form):
@@ -153,6 +199,16 @@ class ClientUpdate(LoginRequiredMixin, UpdateView):
         if 'save_and_add_another' in self.request.POST:
             return redirect('bank:create_client')
         return response
+
+
+class ClientDelete(LoginRequiredMixin, DeleteView):
+    model = models.Client
+    template_name = 'bank/delete_client.html'
+    success_url = 'http://127.0.0.1:8000/bank/client_list'  # TODO fix this
+
+    def get_context_data(self, **kwargs):
+        context = {'obj_client': self.object, 'id': self.object.id}
+        return context
 
 
 @login_required(login_url="/accounts/login")

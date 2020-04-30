@@ -4,7 +4,8 @@
 {% block title %}Create System User{% endblock %}
 
 {% block extrastyle %}
-<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">{% endblock %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+{% endblock %}
 
 {% block content_title %}Create System User{% endblock %}
 
@@ -19,43 +20,47 @@
 {%block content %}
 <form class="site-form" action="{% url 'accounts:create_user' %}" method="post">
     {% csrf_token %}
-    <div>
-          <fieldset class="module aligned wide">
-        <div class="form-row field-username">
-            <div>
-                <label class="required" for="id_username">Username:</label>
-                <input type="text" name="username" class="vTextField" maxlength="150" autocapitalize="none"
-                       autocomplete="username" autofocus required id="id_username">
-                <div class="help">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
-            </div>
-        </div>
-        <div class="form-row field-password1">
-            <div>
-                <label class="required" for="id_password1">Password:</label>
-                <input type="password" name="password1" autocomplete="new-password" required id="id_password1">
-                <div class="help">
-                    <ul>
-                        <li>Your password can’t be too similar to your other personal information.</li>
-                        <li>Your password must contain at least 8 characters.</li>
-                        <li>Your password can’t be a commonly used password.</li>
-                        <li>Your password can’t be entirely numeric.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="form-row field-password2">
-            <div>
-                <label class="required" for="id_password2">Password confirmation:</label>
-                <input type="password" name="password2" autocomplete="new-password" required id="id_password2">
-                <div class="help">Enter the same password as before, for verification.</div>
-            </div>
-        </div>
-          </fieldset>
+    <div class="module">
+        <h2 class="section">Transaction Details</h2>
     </div>
+    <fieldset class="module aligned ">
+        {% for item in form %}
+        <div class="form-row">
+            <div>
+                <label class="required">{{ item.label }}</label>
+                {{ item }}
+                <div class="help">{{ item.help_text }}</div>
+                {{ item.validate }}
+            </div>
+        </div>
+        {% endfor %}
+        <ul class="errorlist" hidden="{{ hidden }}">
+            <li>The password is too similar to the username.</li>
+            <li>This password is too short. It must contain at least 8 characters.</li>
+            <li>This password is too common.</li>
+        </ul>
+    </fieldset>
 
     <div class="submit-row">
-        <input type="submit" value="Save" class="default" name="_save">
+        <input type="submit" name="save_and_add_another" value="Save and add another">
+        <input type="submit" name="confirm" value="SAVE">
     </div>
-
 </form>
 {% endblock %}
+
+<!--<p><label for="id_username">Username:</label> <input type="text" name="username" value="test" maxlength="150"-->
+<!--                                                     autocapitalize="none" autocomplete="username" autofocus required-->
+<!--                                                     id="id_username"> <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>-->
+<!--</p>-->
+<!--<p><label for="id_password1">Password:</label> <input type="password" name="password1" autocomplete="new-password"-->
+<!--                                                      required id="id_password1"> <span class="helptext"><ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul></span>-->
+<!--</p>-->
+<!--<ul class="errorlist">-->
+<!--    <li>The password is too similar to the username.</li>-->
+<!--    <li>This password is too short. It must contain at least 8 characters.</li>-->
+<!--    <li>This password is too common.</li>-->
+<!--</ul>-->
+<!--<p><label for="id_password2">Password confirmation:</label> <input type="password" name="password2"-->
+<!--                                                                   autocomplete="new-password" required-->
+<!--                                                                   id="id_password2"> <span class="helptext">Enter the same password as before, for verification.</span>-->
+<!--</p>-->

@@ -18,10 +18,10 @@
 {% endblock %}
 
 {%block content %}
-<form class="site-form" action="" method="post">
+<form class="site-form" action="{% url 'bank:update_client' id %}" method="post">
     {% csrf_token %}
     <div class="module">
-        <h2 class="section">Transaction Details</h2>
+        <h2 class="section">Client Details</h2>
     </div>
     <fieldset class="module aligned ">
         {% for item in form %}
@@ -34,7 +34,7 @@
         {% endfor %}
     </fieldset>
         <div class="submit-row">
-            <p class="deletelink-box"><a href="/admin/bank/client/3/delete/" class="deletelink">Delete</a></p>
+            <p class="deletelink-box"><a href="/bank/delete_client/{{ id }}" class="deletelink">Delete</a></p>
             <input type="submit" name="save_and_add_another"  value="Save and add another">
             <input type="submit" name="confirm" value="SAVE">
         </div>

@@ -1,0 +1,50 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block title %}Create System User{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+{% endblock %}
+
+{% block content_title %}Create System User{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'bank:application_list' %}">Application List</a> >
+    <a href="{% url 'bank:application_list' %}">Static Data</a> >
+    <a href="{% url 'accounts:user_list' %}">System User List</a> > Create System User
+</div>
+{% endblock %}
+
+{%block content %}
+<form class="site-form" action="{% url 'accounts:update_user' id %}" method="post">
+    {% csrf_token %}
+    <div class="module">
+        <h2 class="section">User Details</h2>
+    </div>
+    <fieldset class="module aligned ">
+        {% for item in form %}
+        <div class="form-row">
+            <div>
+                <label class="required">{{ item.label }}</label>
+                {{ item }}
+                <div class="help">{{ item.help_text }}</div>
+                {{ item.validate }}
+            </div>
+        </div>
+        {% endfor %}
+        <ul class="errorlist" hidden="{{ hidden }}">
+            <li>The password is too similar to the username.</li>
+            <li>This password is too short. It must contain at least 8 characters.</li>
+            <li>This password is too common.</li>
+        </ul>
+    </fieldset>
+
+    <div class="submit-row">
+        <p class="deletelink-box"><a href="/accounts/delete_user/{{ id }}" class="deletelink">Delete</a></p>
+        <input type="submit" name="save_and_add_another" value="Save and add another">
+        <input type="submit" name="confirm" value="SAVE">
+    </div>
+</form>
+{% endblock %}

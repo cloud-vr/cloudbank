@@ -1,0 +1,50 @@
+{% extends "bank/base/base_template.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-6">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <form class="form-control-user" action="{% block form_action %}{% endblock %}" method="post">
+                                {% csrf_token %}
+                                {% for item in form %}
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="required">{{ item.label }}</label>
+                                        {{ item }}
+                                        {% block help_text %}<div class="help">{{ item.help_text }}</div>{% endblock %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <hr>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary btn-icon-split">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                                        <span class="text">CONFIRM</span>
+                                    </button>
+                                    <button type="submit" name="confirm_and_add_another" class="btn btn-primary btn-icon-split">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-arrow-right"></i>
+                    </span>
+                                        <span class="text">Confirm and add another</span>
+                                    </button>
+                                    <p></p>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

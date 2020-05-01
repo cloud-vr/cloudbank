@@ -1,19 +1,9 @@
-{% extends "object_form.html" %}
+{% extends "bank/base/object_form.html" %}
 {% load static %}
 
 {% block title %}Deposit Transaction{% endblock %}
 
 {% block content_title %}Deposit Transaction{% endblock %}
 
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-    <a href="{% url 'bank:application_list' %}">Application List</a> >
-    <a href="{% url 'bank:application_list' %}">Transactions</a> >
-    <a href="{% url 'bank:deposit_trx_list' %}">Deposit Transaction List</a> > New Deposit
-</div>
-{% endblock %}
-
-{%block obj_self_url%}{% url 'bank:deposit_trx_create' %}{% endblock %}
-
-{%block obj_list_url%}{% url 'bank:deposit_trx_list' %}{% endblock %}
+{% block form_action %}{% url 'bank:deposit_trx_create' %}{% endblock %}
 

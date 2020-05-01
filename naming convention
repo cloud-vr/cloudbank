@@ -1,0 +1,7 @@
+templates: <object name>_<action> ex. user_create.html
+class: <object name>_<action> [Pascal case] ex. UserCreate
+
+variables:
+    - local = l_var
+    - object = obj_<object name>
+    - object list = obj_list_<object name>

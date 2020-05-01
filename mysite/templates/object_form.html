@@ -1,0 +1,46 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+<style>
+a.back {
+background: #79aec8;
+padding: 10px 15px;
+border: none;
+border-radius: 4px;
+color: #fff;
+cursor: pointer;
+font-size: 13px;
+vertical-align: center
+}
+
+</style>
+{% endblock %}
+
+{%block content %}
+<form class="site-form" action="{%block obj_self_url%}{% endblock %}" method="post">
+    {% csrf_token %}
+    <div class="module">
+        <h2 class="section">{% block obj_details_title %}Transaction{% endblock %} Details</h2>
+    </div>
+    <fieldset class="module aligned " {{ disabled }}>
+        {% for item in form %}
+        <div class="form-row">
+            <div>
+                <label class="required">{{ item.label }}</label>
+                {{ item }}
+                {% block help_text %}<div class="help">{{ item.help_text }}</div>{% endblock %}
+            </div>
+        </div>
+        {% endfor %}
+        <div class="submit-row">
+            {% block delete_button %}{% endblock %}
+            <a class="back" href="{%block obj_list_url%}{% endblock %}">Back to list</a>
+            <input type="submit" name="confirm_and_add_another" {{ hidden }} value="Confirm and add another">
+            <input type="submit" name="confirm" {{ hidden }} value="CONFIRM">
+        </div>
+
+    </fieldset>
+</form>
+{% endblock %}

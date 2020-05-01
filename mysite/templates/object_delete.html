@@ -1,0 +1,15 @@
+{% extends "admin/delete_confirmation.html" %}
+{% load static %}
+
+{%block content %}
+<h1>Are you sure?</h1>
+<p>Are you sure you want to delete the client "{{ obj_client }}"? </p>
+<form action="{% block delete_url %}{% endblock %}" method="post">
+    {% csrf_token %}
+    <div>
+        <input type="hidden" name="post" value="yes">
+        <input type="submit" value="Yes, I’m sure">
+        <a href="{% block update_url %}{% endblock %}" class="button cancel-link">No, take me back</a>
+    </div>
+</form>
+{% endblock %}

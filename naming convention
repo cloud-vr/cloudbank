@@ -1,4 +1,5 @@
 templates: <object name>_<action> ex. user_create.html
+class: <object name>_<action> [Pascal case] ex. UserCreate
 
 variables:
     - local = l_var

@@ -1,11 +1,7 @@
-{% extends "base_layout.html" %}
+{% extends "object_list.html" %}
 {% load static %}
 
 {% block title %}Transfer Transaction List{% endblock %}
-
-{% block extrastyle %}
-<link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
-{% endblock %}
 
 {% block content_title %}Transfer Transaction List{% endblock %}
 
@@ -16,54 +12,33 @@
 </div>
 {% endblock %}
 
-{%block content %}
-<ul class="object-tools">
-    <li>
-        <a href="{% url 'bank:create_transfer_trx'%}" class="addlink">
-            New Transfer
-        </a>
-    </li>
-</ul>
+{%block obj_new_url %}{% url 'bank:transfer_trx_create'%}{% endblock %}
+{%block new_obj_name %}Transfer{% endblock %}
 
-<div class="module filtered" id="changelist">
-    <div id="toolbar">
-        <form id="changelist-search" method="get">
-            <div><!-- DIV needed for valid HTML -->
-                <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Search"></label>
-                <input type="text" size="40" name="q" value="" id="searchbar" autofocus>
-                <input type="submit" id="search_button" name="search_button" value="Search">
-            </div>
-        </form>
-    </div>
+{%block obj_list_url %}{% url 'bank:transfer_trx_list'%}{% endblock %}
 
-    <form class="site-form" action="{% url 'bank:transfer_trx_list'%}" method="post">
-        {% csrf_token %}
-        <div class="results">
-            <table id="result_list">
-                <thead>
-                <tr>
-                    <th>
-                        <div class="text"><span>Trx ref:</span></div>
-                    </th>
-                    <th>Trx Date:</th>
-                    <th>From Client:</th>
-                    <th>To Client:</th>
-                    <th>transfer Amount:</th>
-                    <th>Currency:</th>
-                </tr>
-                </thead>
-                {% for transfer_trx in object_list %}
-                <tr>
-                    <td><a href="view_transfer_trx/{{ transfer_trx.id }}">{{ transfer_trx.trx_ref }}</a></td>
-                    <td>{{ transfer_trx.trx_date }}</td>
-                    <td>{{ transfer_trx.from_client }}</td>
-                    <td>{{ transfer_trx.to_client }}</td>
-                    <td>{{ transfer_trx.transfer_amt }}</td>
-                    <td>{{ transfer_trx.curr }}</td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </form>
-</div>
+{%block table_headers%}
+<thead>
+<th>
+    <div class="text"><span>Trx ref:</span></div>
+</th>
+<th>Trx Date:</th>
+<th>From Client:</th>
+<th>To Client:</th>
+<th>transfer Amount:</th>
+<th>Currency:</th>
+</thead>
+{% endblock %}
+
+{%block table_rows%}
+{% for transfer_trx in object_list %}
+<tr>
+    <td><a href="transfer_trx_view/{{ transfer_trx.id }}">{{ transfer_trx.trx_ref }}</a></td>
+    <td>{{ transfer_trx.trx_date }}</td>
+    <td>{{ transfer_trx.from_client }}</td>
+    <td>{{ transfer_trx.to_client }}</td>
+    <td>{{ transfer_trx.transfer_amt }}</td>
+    <td>{{ transfer_trx.curr }}</td>
+</tr>
+{% endfor %}
 {% endblock %}

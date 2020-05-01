@@ -1,11 +1,7 @@
-{% extends "base_layout.html" %}
+{% extends "object_list.html" %}
 {% load static %}
 
 {% block title %}Client List{% endblock %}
-
-{% block extrastyle %}
-<link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
-{% endblock %}
 
 {% block content_title %}Client List{% endblock %}
 
@@ -16,52 +12,33 @@
 </div>
 {% endblock %}
 
-{%block content %}
-<ul class="object-tools">
-    <li>
-        <a href="{% url 'bank:create_client' %}" class="addlink">
-            New Client
-        </a>
-    </li>
-</ul>
+{%block obj_new_url %}{% url 'bank:client_create' %}{% endblock %}
+{%block new_obj_name %}Client{% endblock %}
 
-<div class="module filtered" id="changelist">
-    <div id="toolbar">
-        <form id="changelist-search" method="get">
-            <div><!-- DIV needed for valid HTML -->
-                <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Search"></label>
-                <input type="text" size="40" name="q" value="" id="searchbar" autofocus>
-                <input type="submit" id="search_button" name="search_button" value="Search">
-            </div>
-        </form>
-    </div>
+{%block obj_list_url %}{% url 'bank:client_list' %}{% endblock %}
 
-    <form class="site-form" action="{% url 'bank:client_list' %}" method="post">
-        {% csrf_token %}
-        <div class="results">
-            <table id="result_list">
-                <thead>
-                <tr>
-                    <th>
-                        <div class="text"><span>First Name:</span></div>
-                    </th>
-                    <th>Last Name:</th>
-                    <th>Account Number:</th>
-                    <th>Email Address:</th>
-                    <th>Balance:</th>
-                </tr>
-                </thead>
-                {% for obj in object_list %}
-                <tr>
-                    <td><a href="update_client/{{ obj.id }}">{{ obj.fname }}</a></td>
-                    <td>{{ obj.lname }}</td>
-                    <td>{{ obj.acct_num }}</td>
-                    <td>{{ obj.email_addr }}</td>
-                    <td>{{ obj.balance }}</td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </form>
-</div>
+{%block table_headers%}
+<thead>
+<tr>
+    <th>
+        <div class="text"><span>First Name:</span></div>
+    </th>
+    <th>Last Name:</th>
+    <th>Account Number:</th>
+    <th>Email Address:</th>
+    <th>Balance:</th>
+</tr>
+</thead>
+{% endblock %}
+{%block table_rows%}
+{% for obj in object_list %}
+<tr>
+    <td><a href="client_update/{{ obj.id }}">{{ obj.fname }}</a></td>
+    <td>{{ obj.lname }}</td>
+    <td>{{ obj.acct_num }}</td>
+    <td>{{ obj.email_addr }}</td>
+    <td>{{ obj.balance }}</td>
+</tr>
+{% endfor %}
+
 {% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
+{% endblock %}
+
+{%block content %}
+<ul class="object-tools">
+    <li>
+        <a href="{%block obj_new_url %}{% endblock %}" class="addlink">
+            New {%block new_obj_name %}{% endblock %}
+        </a>
+    </li>
+</ul>
+
+<div class="module filtered" id="changelist">
+    <div id="toolbar">
+        <form id="changelist-search" method="get">
+            <div><!-- DIV needed for valid HTML -->
+                <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Search"></label>
+                <input type="text" size="40" name="q" value="" id="searchbar" autofocus>
+                <input type="submit" id="search_button" name="search_button" value="Search">
+            </div>
+        </form>
+    </div>
+
+    <form class="site-form" action="{%block obj_list_url %}{% endblock %}" method="post">
+        {% csrf_token %}
+        <div class="results">
+            <table id="result_list">
+                {%block table_headers%}{% endblock %}
+                {%block table_rows%}{% endblock %}
+            </table>
+        </div>
+    </form>
+</div>
+{% endblock %}

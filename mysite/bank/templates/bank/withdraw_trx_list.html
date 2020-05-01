@@ -1,11 +1,7 @@
-{% extends "base_layout.html" %}
+{% extends "object_list.html" %}
 {% load static %}
 
 {% block title %}Withdraw Transaction List{% endblock %}
-
-{% block extrastyle %}
-<link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
-{% endblock %}
 
 {% block content_title %}Withdraw Transaction List{% endblock %}
 
@@ -16,51 +12,31 @@
 </div>
 {% endblock %}
 
-{%block content %}
-<ul class="object-tools">
-    <li>
-        <a href="{% url 'bank:create_withdraw_trx'%}" class="addlink">
-            New Withdraw
-        </a>
-    </li>
-</ul>
-<div class="module filtered" id="changelist">
-    <div id="toolbar">
-        <form id="changelist-search" method="get">
-            <div><!-- DIV needed for valid HTML -->
-                <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Search"></label>
-                <input type="text" size="40" name="q" value="" id="searchbar" autofocus>
-                <input type="submit" id="search_button" name="search_button" value="Search">
-            </div>
-        </form>
-    </div>
+{%block obj_new_url %}{% url 'bank:withdraw_trx_create'%}{% endblock %}
+{%block new_obj_name %}Withdraw{% endblock %}
 
-    <form class="site-form" action="{% url 'bank:withdraw_trx_list'%}" method="post">
-        {% csrf_token %}
-        <div class="results">
-            <table id="result_list">
-                <thead>
-                <tr>
-                    <th>
-                        <div class="text"><span>Trx ref:</span></div>
-                    </th>
-                    <th>Trx Date:</th>
-                    <th>Client:</th>
-                    <th>Withdraw Amount:</th>
-                    <th>Currency:</th>
-                </tr>
-                </thead>
-                {% for withdraw_trx in object_list %}
-                <tr>
-                    <td><a href="view_withdraw_trx/{{ withdraw_trx.id }}">{{ withdraw_trx.trx_ref }}</a></td>
-                    <td>{{ withdraw_trx.trx_date }}</td>
-                    <td>{{ withdraw_trx.client }}</td>
-                    <td>{{ withdraw_trx.withdraw_amt }}</td>
-                    <td>{{ withdraw_trx.curr }}</td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </form>
-</div>
+{%block obj_list_url %}{% url 'bank:withdraw_trx_list'%}{% endblock %}
+
+{%block table_headers%}
+<thead>
+<th>
+    <div class="text"><span>Trx ref:</span></div>
+</th>
+<th>Trx Date:</th>
+<th>Client:</th>
+<th>Withdraw Amount:</th>
+<th>Currency:</th>
+</thead>
+{% endblock %}
+
+{%block table_rows%}
+{% for withdraw_trx in object_list %}
+<tr>
+    <td><a href="withdraw_trx_view/{{ withdraw_trx.id }}">{{ withdraw_trx.trx_ref }}</a></td>
+    <td>{{ withdraw_trx.trx_date }}</td>
+    <td>{{ withdraw_trx.client }}</td>
+    <td>{{ withdraw_trx.withdraw_amt }}</td>
+    <td>{{ withdraw_trx.curr }}</td>
+</tr>
+{% endfor %}
 {% endblock %}

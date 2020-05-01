@@ -13,19 +13,19 @@
     <div class="static-data module">
         <table width="300">
             <caption>
-                <a href="" class="section" title="Static Data">Static Data</a>
+                Static Data
             </caption>
 
             <tr class="model-user">
-                <th scope="row"><a href="{% url 'accounts:user_list' %}">System Users</a></th>
-                <td><a href="{% url 'accounts:create_user' %}" class="addlink">Add</a></td>
-                <td><a href="/admin/auth/group/" class="changelink">Edit</a></td>
+                <th scope="row"><a href="{% url 'bank:user_list' %}">System Users</a></th>
+                <td><a href="{% url 'bank:user_create' %}" class="addlink">Add</a></td>
+                <td><a href="{% url 'bank:user_list' %}" class="changelink">Edit</a></td>
             </tr>
 
             <tr class="model-client">
-                <th scope="row"><a href="{% url 'bank:client_list' %}">Client Accounts</a></th>
-                <td><a href="{% url 'bank:create_client' %}" class="addlink">Add</a></td>
-                <td><a href="" class="changelink">Edit</a></td>
+                <th scope="row"><a href="{% url 'bank:client_list' %}">Clients</a></th>
+                <td><a href="{% url 'bank:client_create' %}" class="addlink">Add</a></td>
+                <td><a href="{% url 'bank:client_list' %}" class="changelink">Edit</a></td>
             </tr>
         </table>
     </div>
@@ -33,22 +33,22 @@
     <div class="transactions module">
         <table width="300">
             <caption>
-                <a href="" class="section" title="Transactions">Transactions</a>
+                Transactions
             </caption>
 
             <tr class="model-deposit">
                 <th scope="row"><a href="{% url 'bank:deposit_trx_list' %}">Deposit</a></th>
-                <td><a href="{% url 'bank:create_deposit_trx' %}" class="addlink">Create New</a></td>
+                <td><a href="{% url 'bank:deposit_trx_create' %}" class="addlink">Create New</a></td>
             </tr>
 
             <tr class="model-withdrawal">
                 <th scope="row"><a href="{% url 'bank:withdraw_trx_list' %}">Withdrawal</a></th>
-                <td><a href="{% url 'bank:create_withdraw_trx' %}" class="addlink">Create New</a></td>
+                <td><a href="{% url 'bank:withdraw_trx_create' %}" class="addlink">Create New</a></td>
             </tr>
 
             <tr class="model-transfers">
                 <th scope="row"><a href="{% url 'bank:transfer_trx_list' %}">Transfers</a></th>
-                <td><a href="{% url 'bank:create_transfer_trx' %}" class="addlink">Create New</a></td>
+                <td><a href="{% url 'bank:transfer_trx_create' %}" class="addlink">Create New</a></td>
             </tr>
         </table>
     </div>

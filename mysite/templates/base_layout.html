@@ -19,7 +19,7 @@
         Welcome,
         <strong>vince</strong>. /
         <a href="{% url 'bank:application_list' %}">View site</a> /
-        <a href="{% url 'accounts:logout' %}">Log out</a>
+        <a href="{% url 'bank:logout' %}">Log out</a>
     </div>
 
 </div>
@@ -29,7 +29,7 @@
 {% endblock %}
 
 <!-- Content -->
-<div id="content" class="colS">
+<div id="content" class="col">
     <h1>{% block content_title %}{% endblock %}</h1>
     <div id="content-main">
         {%block content %}{% endblock %}

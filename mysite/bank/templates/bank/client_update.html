@@ -1,0 +1,22 @@
+{% extends "object_form.html" %}
+{% load static %}
+
+{% block title %}Update Client{% endblock %}
+
+{% block content_title %}Update Client{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'bank:application_list' %}">Application List</a> >
+    <a href="{% url 'bank:application_list' %}">Static Data</a> >
+    <a href="{% url 'bank:client_list' %}">Client List</a> > Update Client
+</div>
+{% endblock %}
+
+{% block obj_details_title %}Client{% endblock %}
+
+{%block obj_self_url%}{% url 'bank:client_update' id %}{% endblock %}
+
+{%block obj_list_url%}{% url 'bank:client_list' %}{% endblock %}
+
+{% block delete_button %}<p class="deletelink-box"><a href="/bank/client_delete/{{ id }}" class="deletelink">Delete</a></p>{% endblock %}

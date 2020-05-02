@@ -28,7 +28,7 @@
 {%block table_body %}
 {% for deposit_trx in object_list %}
 <tr>
-    <td><a href="deposit_trx_view/{{ deposit_trx.id }}">{{ deposit_trx.trx_ref }}</a></td>
+    <td><a href="{% url 'bank:deposit_trx_view' deposit_trx.id %}">{{ deposit_trx.trx_ref }}</a></td>
     <td>{{ deposit_trx.trx_date }}</td>
     <td>{{ deposit_trx.client }}</td>
     <td>{{ deposit_trx.deposit_amt }}</td>

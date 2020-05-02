@@ -1,17 +1,9 @@
-{% extends "object_form.html" %}
+{% extends "bank/base/object_form.html" %}
 {% load static %}
 
 {% block title %}Create System User{% endblock %}
 
 {% block content_title %}Create System User{% endblock %}
-
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-    <a href="{% url 'bank:application_list' %}">Application List</a> >
-    <a href="{% url 'bank:application_list' %}">Static Data</a> >
-    <a href="{% url 'bank:user_list' %}">System User List</a> > Create System User
-</div>
-{% endblock %}
 
 {% block obj_details_title %}User{% endblock %}
 
@@ -19,4 +11,11 @@
 
 {%block obj_list_url%}{% url 'bank:user_list' %}{% endblock %}
 
-{% block delete_button %}<p class="deletelink-box"><a href="/bank/user_delete/{{ id }}" class="deletelink">Delete</a></p>{% endblock %}
+{% block delete_button %}
+<a href="{% url 'bank:user_delete' id %}" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-trash"></i>
+                    </span>
+    <span class="text">Delete</span>
+</a>
+{% endblock %}

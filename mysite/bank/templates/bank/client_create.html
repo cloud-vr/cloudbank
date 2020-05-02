@@ -5,4 +5,8 @@
 
 {% block content_title %}Create Client{% endblock %}
 
+{% block img_class %}bg-client{% endblock %}
+
 {% block form_action %}{% url 'bank:client_create' %}{% endblock %}
+
+{% block obj_list_url %}{% url 'bank:client_list' %}{% endblock %}

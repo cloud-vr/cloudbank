@@ -1,15 +1,7 @@
-{% extends "object_delete.html" %}
+{% extends "bank/base/object_delete.html" %}
 {% load static %}
 
 {% block title %}Delete Client{% endblock %}
 
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-    <a href="{% url 'bank:application_list' %}">Application List</a> >
-    <a href="{% url 'bank:application_list' %}">Static Data</a> >
-    <a href="{% url 'bank:client_list' %}">Client List</a> > Delete Client
-</div>
-{% endblock %}
-
 {% block delete_url %}{% url 'bank:client_delete' id %}{% endblock %}
-{% block update_url %}/bank/client_update/{{ id }}{% endblock %}
+{% block update_url %}{% url 'bank:client_update' id %}{% endblock %}

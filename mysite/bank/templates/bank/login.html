@@ -12,7 +12,7 @@
     {% load static %}
     <base href="{% static 'bank/' %}"/>
 
-    <title>SB Admin 2 - Login</title>
+    <title>Cloud Bank</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -38,7 +38,7 @@
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">Welcome to Cloud Bank</h1>
                                 </div>
                                 {% if form.non_field_errors %}
                                 {% for error in form.non_field_errors %}
@@ -62,7 +62,7 @@
                                 </form>
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="">About the App</a>
+                                    <a class="small" href="{% url 'bank:about' %}">About the App</a>
                                 </div>
                                 <hr>
                             </div>

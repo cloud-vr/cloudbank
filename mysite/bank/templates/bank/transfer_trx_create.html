@@ -5,5 +5,8 @@
 
 {% block content_title %}Transfer Transaction{% endblock %}
 
+{% block img_class %}bg-transfer{% endblock %}
+
 {% block form_action %}{% url 'bank:transfer_trx_create' %}{% endblock %}
 
+{% block obj_list_url %}{% url 'bank:transfer_trx_list' %}{% endblock %}

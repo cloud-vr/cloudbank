@@ -5,5 +5,8 @@
 
 {% block content_title %}Deposit Transaction{% endblock %}
 
+{% block img_class %}bg-deposit{% endblock %}
+
 {% block form_action %}{% url 'bank:deposit_trx_create' %}{% endblock %}
 
+{% block obj_list_url %}{% url 'bank:deposit_trx_list' %}{% endblock %}

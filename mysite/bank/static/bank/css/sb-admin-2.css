@@ -10584,19 +10584,37 @@ a:focus {
 }
 
 .bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
+  background: url("../img/money.jpg");
   background-position: center;
   background-size: cover;
 }
 
-.bg-register-image {
-  background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");
+.bg-user {
+  background: url("../img/user_puppy.jpg");
   background-position: center;
   background-size: cover;
 }
 
-.bg-password-image {
-  background: url("https://source.unsplash.com/oWTW-jNGl9I/600x800");
+.bg-client {
+  background: url('../img/client_puppy.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+.bg-deposit {
+  background: url('../img/deposit_puppy.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+.bg-withdraw {
+  background: url('../img/withdraw_puppy.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+.bg-transfer {
+  background: url('../img/transfer_puppy.jpg');
   background-position: center;
   background-size: cover;
 }

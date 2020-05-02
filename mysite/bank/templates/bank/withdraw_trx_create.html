@@ -5,4 +5,8 @@
 
 {% block content_title %}Withdraw Transaction{% endblock %}
 
+{% block img_class %}bg-withdraw{% endblock %}
+
 {% block form_action %}{% url 'bank:withdraw_trx_create'%}{% endblock %}
+
+{% block obj_list_url %}{% url 'bank:withdraw_trx_list'%}{% endblock %}

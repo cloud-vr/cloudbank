@@ -17,7 +17,7 @@
 {%block table_body %}
 {% for obj in object_list %}
 <tr>
-    <td><a href="client_update/{{ obj.id }}">{{ obj.fname }}</a></td>
+    <td><a href="{% url 'bank:client_update' obj.id %}">{{ obj.fname }}</a></td>
     <td>{{ obj.lname }}</td>
     <td>{{ obj.acct_num }}</td>
     <td>{{ obj.email_addr }}</td>

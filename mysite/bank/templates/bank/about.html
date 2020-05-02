@@ -1,0 +1,178 @@
+{% extends "bank/base/base_template.html" %}
+{% load static %}
+
+{% block title %}About the App{% endblock %}
+
+{% block content_title %}About the App{% endblock %}
+
+{%block content %}
+<div class="row">
+    <div class="col-lg-6 mb-4">
+
+        <!-- Why it was made? -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Why it was made?</h6>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 15rem;"
+                         src="img/undraw_lightbulb_moment_evxr.svg" alt="">
+                </div>
+                <p>Hi, I'm <strong>Vince Reyes</strong> and I work on Test Automation Projects.
+                    I wanted to explore the possibility of creating a generic test automation framework for
+                    transactional web applications.
+                </p>
+                <p>To do that, I need a transactional web application to play with.
+                    I can't use websites like Amazon, Airbnb, and the like because I don't have control over the changes
+                    they do.
+                </p>
+                <p>
+                    So my solution is to just make one myself. Thus, <strong>Cloud Bank.</strong>
+                </p>
+                <a target="_blank" rel="nofollow" href="https://medium.com/@vincereyes">More information &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Source -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Sources</h6>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>GitHub: <a href="https://github.com/cloud-vr/CloudBank" target="_blank">Cloud Bank</a></li>
+                    <li>Bootstrap Template: <a href="https://startbootstrap.com/themes/sb-admin-2/" target="_blank">SB
+                        Admin 2</a></li>
+                    <li>Documentation: <a href="https://medium.com/@vincereyes" target="_blank">Practice Test
+                        Automation</a></li>
+                    <li>For Collaboration: <a href="{% url 'bank:about' %}">gvsreyes@gmail.com</a></li>
+                </ul>
+<!--                <p></p>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <!-- Approach -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">CloudBank Features</h6>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                         src="img/undraw_wallet_aym5.svg" alt="">
+                </div>
+                <p><strong>Cloud Bank</strong> is an imagined version of the web application being used by clerks in the bank for processing
+                basic transactions such as deposits, withdrawals, and transfers.
+                </p>
+                <p>Below are the list of modules and actions available.</p>
+
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr class="text-center">
+                        <th>Module</th>
+                        <th>Create</th>
+                        <th>View</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                        <th>Search</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="text-center">
+                        <td>System User</td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>Client</td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>Deposit</td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>Withdraw</td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>Transfer</td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>Dashboard</td>
+                        <td></td>
+                        <td>
+                            <div class="btn btn-success btn-circle btn-sm"><i class="fas fa-check"></i></div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

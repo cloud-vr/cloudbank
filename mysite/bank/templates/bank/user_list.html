@@ -1,38 +1,22 @@
-{% extends "object_list.html" %}
+{% extends "bank/base/object_list.html" %}
 {% load static %}
 
 {% block title %}System User List{% endblock %}
 
 {% block content_title %}System User List{% endblock %}
 
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-    <a href="{% url 'bank:application_list' %}">Application List</a> >
-    <a href="{% url 'bank:application_list' %}">Static Data</a> > System User List
-</div>
+{%block table_title %}System Users{% endblock %}
+
+{% block table_headers %}
+<th>Username:</th>
+<th>Last Login:</th>
+<th>Date Joined:</th>
 {% endblock %}
 
-{%block obj_new_url %}{% url 'bank:user_create' %}{% endblock %}
-{%block new_obj_name %}User{% endblock %}
-
-{%block obj_list_url %}{% url 'bank:user_list' %}{% endblock %}
-
-{%block table_headers%}
-<thead>
-<tr>
-
-    <th>
-        <div class="text"><span>Username:</span></div>
-    </th>
-    <th>Last Login:</th>
-    <th>Date Joined:</th>
-</tr>
-</thead>
-{% endblock %}
-{%block table_rows%}
+{% block table_body %}
 {% for user in object_list %}
 <tr>
-    <td><a href="user_update/{{ user.id }}">{{ user.username }}</a></td>
+    <td><a href="{% url 'bank:user_update' user.id %}">{{ user.username }}</a></td>
     <td>{{ user.last_login }}</td>
     <td>{{ user.date_joined }}</td>
 </tr>

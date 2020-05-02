@@ -267,7 +267,7 @@ def login_view(request):
             if 'next' in request.POST:
                 if request.POST['next']:
                     return redirect(request.POST.get('next'))
-            return redirect('bank:application_list')
+            return redirect('bank:about')
     else:
         form = AuthenticationForm()
     return render(request, 'bank/login.html', {'form': form})
@@ -277,7 +277,9 @@ def logout_view(request):
     logout(request)
     return redirect('bank:login')
 
+def about(request):
+    return render(request, 'bank/about.html')
 
 @login_required(login_url="/bank/login")
-def application_list(request):
-    return render(request, 'bank/application_list.html')
+def dashboard_view(request):
+    return render(request, 'bank/dashboard.html')

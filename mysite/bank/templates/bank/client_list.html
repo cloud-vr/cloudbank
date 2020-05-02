@@ -1,44 +1,27 @@
-{% extends "object_list.html" %}
+{% extends "bank/base/object_list.html" %}
 {% load static %}
 
 {% block title %}Client List{% endblock %}
 
 {% block content_title %}Client List{% endblock %}
 
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-    <a href="{% url 'bank:application_list' %}">Application List</a> >
-    <a href="{% url 'bank:application_list' %}">Static Data</a> > Client List
-</div>
-{% endblock %}
-
-{%block obj_new_url %}{% url 'bank:client_create' %}{% endblock %}
-{%block new_obj_name %}Client{% endblock %}
-
-{%block obj_list_url %}{% url 'bank:client_list' %}{% endblock %}
+{%block table_title %}Clients{% endblock %}
 
 {%block table_headers%}
-<thead>
-<tr>
-    <th>
-        <div class="text"><span>First Name:</span></div>
-    </th>
+    <th>First Name:</th>
     <th>Last Name:</th>
     <th>Account Number:</th>
     <th>Email Address:</th>
     <th>Balance:</th>
-</tr>
-</thead>
 {% endblock %}
-{%block table_rows%}
+{%block table_body %}
 {% for obj in object_list %}
 <tr>
-    <td><a href="client_update/{{ obj.id }}">{{ obj.fname }}</a></td>
+    <td><a href="{% url 'bank:client_update' obj.id %}">{{ obj.fname }}</a></td>
     <td>{{ obj.lname }}</td>
     <td>{{ obj.acct_num }}</td>
     <td>{{ obj.email_addr }}</td>
     <td>{{ obj.balance }}</td>
 </tr>
 {% endfor %}
-
 {% endblock %}

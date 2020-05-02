@@ -1,39 +1,32 @@
-{% extends "object_list.html" %}
+{% extends "bank/base/object_list.html" %}
 {% load static %}
 
 {% block title %}Transfer Transaction List{% endblock %}
 
 {% block content_title %}Transfer Transaction List{% endblock %}
 
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-    <a href="{% url 'bank:application_list' %}">Application List</a> >
-    <a href="{% url 'bank:application_list' %}">Transactions</a> > Transfer Transaction List
-</div>
-{% endblock %}
-
-{%block obj_new_url %}{% url 'bank:transfer_trx_create'%}{% endblock %}
-{%block new_obj_name %}Transfer{% endblock %}
-
-{%block obj_list_url %}{% url 'bank:transfer_trx_list'%}{% endblock %}
-
-{%block table_headers%}
-<thead>
-<th>
-    <div class="text"><span>Trx ref:</span></div>
-</th>
+{% block table_headers %}
+<th>Trx ref:</th>
 <th>Trx Date:</th>
 <th>From Client:</th>
 <th>To Client:</th>
-<th>transfer Amount:</th>
+<th>Transfer Amount:</th>
 <th>Currency:</th>
-</thead>
 {% endblock %}
 
-{%block table_rows%}
+{% block table_footers %}
+<th>Trx ref:</th>
+<th>Trx Date:</th>
+<th>From Client:</th>
+<th>To Client:</th>
+<th>Transfer Amount:</th>
+<th>Currency:</th>
+{% endblock %}
+
+{% block table_body %}
 {% for transfer_trx in object_list %}
 <tr>
-    <td><a href="transfer_trx_view/{{ transfer_trx.id }}">{{ transfer_trx.trx_ref }}</a></td>
+    <td><a href="{% url 'bank:transfer_trx_view' transfer_trx.id %}">{{ transfer_trx.trx_ref }}</a></td>
     <td>{{ transfer_trx.trx_date }}</td>
     <td>{{ transfer_trx.from_client }}</td>
     <td>{{ transfer_trx.to_client }}</td>

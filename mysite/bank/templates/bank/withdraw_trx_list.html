@@ -1,38 +1,30 @@
-{% extends "object_list.html" %}
+{% extends "bank/base/object_list.html" %}
 {% load static %}
 
 {% block title %}Withdraw Transaction List{% endblock %}
 
 {% block content_title %}Withdraw Transaction List{% endblock %}
 
-{% block breadcrumbs %}
-<div class="breadcrumbs">
-    <a href="{% url 'bank:application_list' %}">Application List</a> >
-    <a href="{% url 'bank:application_list' %}">Transactions</a> > Withdraw Transaction List
-</div>
-{% endblock %}
-
-{%block obj_new_url %}{% url 'bank:withdraw_trx_create'%}{% endblock %}
-{%block new_obj_name %}Withdraw{% endblock %}
-
-{%block obj_list_url %}{% url 'bank:withdraw_trx_list'%}{% endblock %}
-
-{%block table_headers%}
-<thead>
-<th>
-    <div class="text"><span>Trx ref:</span></div>
-</th>
+{% block table_headers %}
+<th>Trx ref:</th>
 <th>Trx Date:</th>
 <th>Client:</th>
 <th>Withdraw Amount:</th>
 <th>Currency:</th>
-</thead>
 {% endblock %}
 
-{%block table_rows%}
+{% block table_footers %}
+<th>Trx ref:</th>
+<th>Trx Date:</th>
+<th>Client:</th>
+<th>Withdraw Amount:</th>
+<th>Currency:</th>
+{% endblock %}
+
+{% block table_body %}
 {% for withdraw_trx in object_list %}
 <tr>
-    <td><a href="withdraw_trx_view/{{ withdraw_trx.id }}">{{ withdraw_trx.trx_ref }}</a></td>
+    <td><a href="{% url 'bank:withdraw_trx_view' withdraw_trx.id %}">{{ withdraw_trx.trx_ref }}</a></td>
     <td>{{ withdraw_trx.trx_date }}</td>
     <td>{{ withdraw_trx.client }}</td>
     <td>{{ withdraw_trx.withdraw_amt }}</td>

@@ -5,6 +5,10 @@ from . import views
 app_name = 'bank'
 
 urlpatterns = [
+    # Dashboard
+    path('dashboard', views.dashboard_view, name='dashboard'),
+    # About
+    path('about', views.about, name='about'),
     # Users
     path('user_list', views.UserList.as_view(), name='user_list'),
     path('user_create', views.UserCreate.as_view(), name='user_create'),
@@ -12,8 +16,6 @@ urlpatterns = [
     path('user_delete/<int:pk>/', views.UserDelete.as_view(), name='user_delete'),
     path('login', views.login_view, name='login'),
     path('logout', views.logout_view, name='logout'),
-    # Application List
-    path('application_list', views.application_list, name='application_list'),
     # Client
     path('client_list', views.ClientList.as_view(), name='client_list'),
     path('client_create', views.ClientCreate.as_view(), name='client_create'),

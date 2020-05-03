@@ -1,55 +1,54 @@
 {% extends "bank/base/base_template.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="card o-hidden border-0 shadow-lg my-5">
-        <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-                <div class="col-lg-4 d-none d-lg-block {% block img_class %}{% endblock %}"></div>
-                <div class="col-lg-8">
-                    <div class="p-4">
-                        <div class="text-center">
-                            <form class="user" action="{% block form_action %}{% endblock %}" method="post">
-                                {% csrf_token %}
-                                <fieldset {{disabled }}>
-                                    {% for item in form %}
-                                    <div class="form-group text-left">
-                                        <label class="required">{{ item.label }}:</label>
-                                        {{ item }}
-                                        {% block help_text %}
-                                        <div class="help small">{{ item.help_text }}</div>
-                                        {% endblock %}
-                                    </div>
-                                    <hr>
-                                    {% endfor %}
-                                </fieldset>
-                                <nav class="navbar navbar-expand bg-gray-300 bg-white topbar mb-4 shadow accordion">
+<div class="row">
+    <div class="col-xl-12 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-4 d-lg-block {% block img_class %}{% endblock %}"></div>
+                    <div class="col-lg-8">
+                        <div class="p-4">
+                            <div class="text-center">
+                                <form class="user" action="{% block form_action %}{% endblock %}" method="post">
+                                    {% csrf_token %}
+                                    <fieldset {{disabled }}>
+                                        {% for item in form %}
+                                        <div class="form-group text-left">
+                                            <label class="required">{{ item.label }}:</label>
+                                            {{ item }}
+                                            {% block help_text %}
+                                            <div class="help small">{{ item.help_text }}</div>
+                                            {% endblock %}
+                                        </div>
+                                        <hr>
+                                        {% endfor %}
+                                    </fieldset>
                                     <div class="text-left">
-                                        <button {{ hidden }} type="submit" class="btn btn-primary btn-icon-split">
+                                        <button {{ hidden }} type="submit"
+                                                class="btn btn-primary btn-icon-split">
                     <span class="icon text-white-50">
                       <i class="fas fa-check"></i>
                     </span>
                                             <span class="text">Confirm</span>
                                         </button>
-
-                                        <button {{ hidden }} type="submit" class="btn btn-primary btn-icon-split">
+                                        <button {{ hidden }} type="submit"
+                                                class="btn btn-primary btn-icon-split">
                     <span class="icon text-white-50">
                       <i class="fas fa-check"></i>
                     </span>
                                             <span class="text">Confirm and add another</span>
                                         </button>
                                         {% block delete_button %}{% endblock %}
-
                                     </div>
-                                </nav>
-
-                                <div class="row">
-                                    <a target="_blank" rel="nofollow" href="{% block obj_list_url %}{% endblock %}">Back
-                                        to list &rarr;</a></div>
-
-
-                            </form>
+                                    <hr>
+                                    <div class="row">
+                                        <a target="_blank" rel="nofollow"
+                                           href="{% block obj_list_url %}{% endblock %}">Back
+                                            to list &rarr;</a></div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

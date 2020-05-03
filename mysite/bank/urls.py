@@ -5,6 +5,9 @@ from . import views
 app_name = 'bank'
 
 urlpatterns = [
+    # Authentication
+    path('login', views.login_view, name='login'),
+    path('logout', views.logout_view, name='logout'),
     # Dashboard
     path('dashboard', views.dashboard_view, name='dashboard'),
     # About
@@ -14,8 +17,6 @@ urlpatterns = [
     path('user_create', views.UserCreate.as_view(), name='user_create'),
     path('user_update/<int:pk>/', views.UserUpdate.as_view(), name='user_update'),
     path('user_delete/<int:pk>/', views.UserDelete.as_view(), name='user_delete'),
-    path('login', views.login_view, name='login'),
-    path('logout', views.logout_view, name='logout'),
     # Client
     path('client_list', views.ClientList.as_view(), name='client_list'),
     path('client_create', views.ClientCreate.as_view(), name='client_create'),

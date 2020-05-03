@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
 
@@ -18,7 +19,8 @@ class UserList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if 'q' in self.request.GET:
-            return User.objects.filter(pk=self.request.GET['q'])
+            if isinstance(self.request.GET['q'], int):
+                return User.objects.filter(pk=self.request.GET['q'])
         else:
             return User.objects.all()
 
@@ -47,7 +49,7 @@ class UserUpdate(LoginRequiredMixin, UpdateView):
 class UserDelete(LoginRequiredMixin, DeleteView):
     model = User
     template_name = 'bank/user_delete.html'
-    success_url = 'http://127.0.0.1:8000/accounts/user_list'  # TODO fix this
+    success_url = reverse_lazy('bank:user_list')
 
     def get_context_data(self, **kwargs):
         context = {'obj_client': self.object, 'id': self.object.id}
@@ -60,8 +62,9 @@ class DepositTransactionList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if 'q' in self.request.GET:
-            l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
-            return models.DepositTransaction.objects.filter(client=l_client)
+            if isinstance(self.request.GET['q'], int):
+                l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
+                return models.DepositTransaction.objects.filter(client=l_client)
         else:
             return models.DepositTransaction.objects.all()
 
@@ -109,8 +112,9 @@ class WithdrawTransactionList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if 'q' in self.request.GET:
-            l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
-            return models.WithdrawTransaction.objects.filter(client=l_client)
+            if isinstance(self.request.GET['q'], int):
+                l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
+                return models.WithdrawTransaction.objects.filter(client=l_client)
         else:
             return models.WithdrawTransaction.objects.all()
 
@@ -158,8 +162,9 @@ class TransferTransactionList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if 'q' in self.request.GET:
-            l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
-            return models.TransferTransaction.objects.filter(from_client=l_client)
+            if isinstance(self.request.GET['q'], int):
+                l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
+                return models.TransferTransaction.objects.filter(from_client=l_client)
         else:
             return models.TransferTransaction.objects.all()
 
@@ -209,7 +214,8 @@ class ClientList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if 'q' in self.request.GET:
-            return models.Client.objects.filter(pk=self.request.GET['q'])
+            if isinstance(self.request.GET['q'], int):
+                return models.Client.objects.filter(pk=self.request.GET['q'])
         else:
             return models.Client.objects.all()
 
@@ -232,7 +238,7 @@ class ClientUpdate(LoginRequiredMixin, UpdateView):
     model = models.Client
     form_class = forms.ClientForm
     template_name = 'bank/client_update.html'
-    success_url = 'http://127.0.0.1:8000/bank/client_list'  # TODO fix this
+    success_url = reverse_lazy('bank:client_list')
 
     def get_context_data(self, **kwargs):
         form = forms.ClientForm(instance=self.object)
@@ -250,7 +256,7 @@ class ClientUpdate(LoginRequiredMixin, UpdateView):
 class ClientDelete(LoginRequiredMixin, DeleteView):
     model = models.Client
     template_name = 'bank/client_delete.html'
-    success_url = 'http://127.0.0.1:8000/bank/client_list'  # TODO fix this
+    success_url = reverse_lazy('bank:client_list')
 
     def get_context_data(self, **kwargs):
         context = {'obj_client': self.object, 'id': self.object.id}
@@ -277,9 +283,30 @@ def logout_view(request):
     logout(request)
     return redirect('bank:login')
 
+
 def about(request):
     return render(request, 'bank/about.html')
 
+
 @login_required(login_url="/bank/login")
 def dashboard_view(request):
-    return render(request, 'bank/dashboard.html')
+    l_deposit_aggregate, l_withdraw_aggregate, l_transfer_aggregate = 0, 0, 0
+    l_deposit_trx_count, l_withdraw_trx_count, l_transfer_trx_count = 0, 0, 0
+    obj_list_deposit_trx = models.DepositTransaction.objects.all()
+    obj_list_withdraw_trx = models.WithdrawTransaction.objects.all()
+    obj_list_transfer_trx = models.TransferTransaction.objects.all()
+    for item in obj_list_deposit_trx:
+        l_deposit_trx_count += 1
+        l_deposit_aggregate += item.deposit_amt
+    for item in obj_list_withdraw_trx:
+        l_withdraw_trx_count += 1
+        l_withdraw_aggregate += item.withdraw_amt
+    for item in obj_list_transfer_trx:
+        l_transfer_trx_count += 1
+        l_transfer_aggregate += item.transfer_amt
+    l_trx_count = l_deposit_trx_count + l_withdraw_trx_count + l_transfer_trx_count
+    l_context = {'l_deposit_aggregate': f'{l_deposit_aggregate:,}',
+                 'l_withdraw_aggregate': f'{l_withdraw_aggregate:,}',
+                 'l_transfer_aggregate': f'{l_transfer_aggregate:,}',
+                 'l_trx_count': l_trx_count,}
+    return render(request, 'bank/dashboard.html', l_context)

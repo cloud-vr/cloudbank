@@ -9,8 +9,8 @@ from . import models
 
 class ClientForm(ModelForm):
     acct_num = forms.IntegerField(widget=forms.TextInput(attrs={'readonly': '',
-                                                             'style': 'background-color:#d3d3d3;',
-                                                             'value': random.randint(1000000000, 9999999999)}))
+                                                                'style': 'background-color:#d3d3d3;',
+                                                                'value': random.randint(1000000000, 9999999999)}))
     balance = forms.FloatField(widget=forms.TextInput(attrs={'readonly': '',
                                                              'style': 'background-color:#d3d3d3;',
                                                              'value': 0}))
@@ -36,6 +36,9 @@ class CreateDepositTrx(ModelForm):
     status = forms.CharField(widget=forms.TextInput(attrs={'readonly': '',
                                                            'style': 'background-color:#d3d3d3;',
                                                            'value': 'OPEN'}))
+    curr = forms.CharField(widget=forms.TextInput(attrs={'readonly': '',
+                                                         'style': 'background-color:#d3d3d3;',
+                                                         'value': 'PHP'}))
 
     class Meta:
         model = models.DepositTransaction
@@ -57,6 +60,9 @@ class CreateWithdrawTrx(ModelForm):
     status = forms.CharField(widget=forms.TextInput(attrs={'readonly': '',
                                                            'style': 'background-color:#d3d3d3;',
                                                            'value': 'OPEN'}))
+    curr = forms.CharField(widget=forms.TextInput(attrs={'readonly': '',
+                                                         'style': 'background-color:#d3d3d3;',
+                                                         'value': 'PHP'}))
 
     class Meta:
         model = models.WithdrawTransaction
@@ -78,6 +84,9 @@ class CreateTransferTrx(ModelForm):
     status = forms.CharField(widget=forms.TextInput(attrs={'readonly': '',
                                                            'style': 'background-color:#d3d3d3;',
                                                            'value': 'OPEN'}))
+    curr = forms.CharField(widget=forms.TextInput(attrs={'readonly': '',
+                                                         'style': 'background-color:#d3d3d3;',
+                                                         'value': 'PHP'}))
 
     class Meta:
         model = models.TransferTransaction

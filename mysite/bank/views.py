@@ -308,5 +308,5 @@ def dashboard_view(request):
     l_context = {'l_deposit_aggregate': f'{l_deposit_aggregate:,}',
                  'l_withdraw_aggregate': f'{l_withdraw_aggregate:,}',
                  'l_transfer_aggregate': f'{l_transfer_aggregate:,}',
-                 'l_trx_count': l_trx_count,}
+                 'l_trx_count': l_trx_count}
     return render(request, 'bank/dashboard.html', l_context)

@@ -305,8 +305,8 @@ def dashboard_view(request):
         l_transfer_trx_count += 1
         l_transfer_aggregate += item.transfer_amt
     l_trx_count = l_deposit_trx_count + l_withdraw_trx_count + l_transfer_trx_count
-    l_context = {'l_deposit_aggregate': f'{l_deposit_aggregate:,}',
-                 'l_withdraw_aggregate': f'{l_withdraw_aggregate:,}',
-                 'l_transfer_aggregate': f'{l_transfer_aggregate:,}',
+    l_context = {'l_deposit_aggregate': l_deposit_aggregate,
+                 'l_withdraw_aggregate': l_withdraw_aggregate,
+                 'l_transfer_aggregate': l_transfer_aggregate,
                  'l_trx_count': l_trx_count}
     return render(request, 'bank/dashboard.html', l_context)

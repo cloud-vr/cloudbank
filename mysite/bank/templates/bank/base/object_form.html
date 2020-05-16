@@ -18,6 +18,7 @@
                                         <div class="form-group text-left">
                                             <label class="required">{{ item.label }}:</label>
                                             {{ item }}
+                                            <div style="color:red">{{ item.errors }}</div>
                                             {% block help_text %}
                                             <div class="help small">{{ item.help_text }}</div>
                                             {% endblock %}
@@ -44,9 +45,8 @@
                                     </div>
                                     <hr>
                                     <div class="row">
-                                        <a target="_blank" rel="nofollow"
-                                           href="{% block obj_list_url %}{% endblock %}">Back
-                                            to list &rarr;</a></div>
+                                        <a rel="nofollow"
+                                           href="{% block obj_list_url %}{% endblock %}">Back to list &rarr;</a></div>
                                 </form>
                             </div>
                         </div>

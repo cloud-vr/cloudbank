@@ -19,10 +19,11 @@ class UserList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if 'q' in self.request.GET:
-            if isinstance(self.request.GET['q'], int):
+            if self.request.GET['q'].isdigit():
                 return User.objects.filter(pk=self.request.GET['q'])
-        else:
-            return User.objects.all()
+            else:
+                self.extra_context = {'errors': 'Please use an integer'}
+        return User.objects.all()
 
 
 # todo if form is invalid show validation errors
@@ -38,7 +39,7 @@ class UserUpdate(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserCreationForm
     template_name = 'bank/user_update.html'
-    success_url = 'user_list'
+    success_url = reverse_lazy('bank:user_list')
 
     def get_context_data(self, **kwargs):
         form = UserCreationForm(instance=self.object)
@@ -62,11 +63,11 @@ class DepositTransactionList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if 'q' in self.request.GET:
-            if isinstance(self.request.GET['q'], int):
-                l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
-                return models.DepositTransaction.objects.filter(client=l_client)
-        else:
-            return models.DepositTransaction.objects.all()
+            if self.request.GET['q'].isdigit():
+                return models.DepositTransaction.objects.filter(client=self.request.GET['q'])
+            else:
+                self.extra_context = {'errors': 'Please use an integer'}
+        return models.DepositTransaction.objects.all()
 
 
 class DepositCreate(LoginRequiredMixin, CreateView):
@@ -112,11 +113,11 @@ class WithdrawTransactionList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if 'q' in self.request.GET:
-            if isinstance(self.request.GET['q'], int):
-                l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
-                return models.WithdrawTransaction.objects.filter(client=l_client)
-        else:
-            return models.WithdrawTransaction.objects.all()
+            if self.request.GET['q'].isdigit():
+                return models.WithdrawTransaction.objects.filter(client=self.request.GET['q'])
+            else:
+                self.extra_context = {'errors': 'Please use an integer'}
+        return models.WithdrawTransaction.objects.all()
 
 
 class WithdrawCreate(LoginRequiredMixin, CreateView):
@@ -162,11 +163,11 @@ class TransferTransactionList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if 'q' in self.request.GET:
-            if isinstance(self.request.GET['q'], int):
-                l_client = get_object_or_404(models.Client, pk=self.request.GET['q'])
-                return models.TransferTransaction.objects.filter(from_client=l_client)
-        else:
-            return models.TransferTransaction.objects.all()
+            if self.request.GET['q'].isdigit():
+                return models.TransferTransaction.objects.filter(from_client=self.request.GET['q'])
+            else:
+                self.extra_context = {'errors': 'Please use an integer'}
+        return models.TransferTransaction.objects.all()
 
 
 class TransferCreate(LoginRequiredMixin, CreateView):
@@ -214,10 +215,11 @@ class ClientList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if 'q' in self.request.GET:
-            if isinstance(self.request.GET['q'], int):
+            if self.request.GET['q'].isdigit():
                 return models.Client.objects.filter(pk=self.request.GET['q'])
-        else:
-            return models.Client.objects.all()
+            else:
+                self.extra_context = {'errors': 'Please use an integer'}
+        return models.Client.objects.all()
 
 
 class ClientCreate(LoginRequiredMixin, CreateView):

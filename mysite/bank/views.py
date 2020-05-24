@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -26,7 +28,6 @@ class UserList(LoginRequiredMixin, ListView):
         return User.objects.all()
 
 
-# todo if form is invalid show validation errors
 class UserCreate(LoginRequiredMixin, CreateView):
     model = User
     form_class = UserCreationForm
@@ -75,6 +76,9 @@ class DepositCreate(LoginRequiredMixin, CreateView):
     form_class = forms.CreateDepositTrx
     template_name = 'bank/deposit_trx_create.html'
     success_url = 'deposit_trx_list'
+
+    def __init__(self):
+        self.initial = {'trx_ref': models.DepositTransaction.objects.all().count() + 1}
 
     def form_valid(self, form):
         obj_client = get_object_or_404(models.Client, pk=self.request.POST['client'])
@@ -126,6 +130,9 @@ class WithdrawCreate(LoginRequiredMixin, CreateView):
     template_name = 'bank/withdraw_trx_create.html'
     success_url = 'withdraw_trx_list'
 
+    def __init__(self):
+        self.initial = {'trx_ref': models.WithdrawTransaction.objects.all().count() + 1}
+
     def form_valid(self, form):
         obj_client = get_object_or_404(models.Client, pk=self.request.POST['client'])
         form.instance.current_balance = obj_client.balance
@@ -175,6 +182,9 @@ class TransferCreate(LoginRequiredMixin, CreateView):
     form_class = forms.CreateTransferTrx
     template_name = 'bank/transfer_trx_create.html'
     success_url = 'transfer_trx_list'
+
+    def __init__(self):
+        self.initial = {'trx_ref': models.TransferTransaction.objects.all().count() + 1}
 
     def form_valid(self, form):
         obj_from_client = get_object_or_404(models.Client, pk=self.request.POST['from_client'])
@@ -227,6 +237,9 @@ class ClientCreate(LoginRequiredMixin, CreateView):
     form_class = forms.ClientForm
     template_name = 'bank/client_create.html'
     success_url = 'client_list'
+
+    def __init__(self):
+        self.initial = {'acct_num': models.Client.objects.all().count() + 1}
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user

@@ -217,12 +217,12 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a id="profile" class="dropdown-item" href="{% if user.id %}{% url 'bank:user_update' user.id %}{% endif %}">
+                            <a id="profile" class="dropdown-item" href="{% if user.id %}{% url 'bank:user_update' user.id %}{% else %}{% url 'bank:login' %}{% endif %}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <a class="dropdown-item" href="{% if user.id %}#{% else %}{% url 'bank:login' %}{% endif %}" {% if user.id %}data-toggle="modal" data-target="#logoutModal"{% endif %}>
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
                             </a>

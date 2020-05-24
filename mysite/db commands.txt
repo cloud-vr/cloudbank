@@ -1,0 +1,8 @@
+backup
+= sqlite3 db.sqlite3 ".backup backup.sqlite3"
+= sqlite3 db.sqlite3 ".backup with_data_backup.sqlite3"
+
+restore
+= sqlite3 db.sqlite3 ".restore fresh_backup.sqlite3"
+= sqlite3 db.sqlite3 ".restore with_data_backup.sqlite3"
+
